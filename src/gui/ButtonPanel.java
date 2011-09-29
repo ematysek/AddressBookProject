@@ -1,14 +1,31 @@
 package gui;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 public class ButtonPanel extends JPanel {
 
+	private JButton addContact;
+	private JButton delete;
+	
 	public ButtonPanel(){
+		this.setLayout(new FlowLayout());
 		
+		addContact = new JButton("New Contact");
+		this.add(addContact);
+		
+		delete = new JButton("Delete");
+		this.add(delete);
+		
+		Border border = BorderFactory.createEtchedBorder();
+		
+		this.setBorder(BorderFactory.createTitledBorder(border, "Tools"));
 	}
 	
 	
