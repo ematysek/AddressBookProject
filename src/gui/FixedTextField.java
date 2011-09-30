@@ -18,7 +18,7 @@ public class FixedTextField extends JTextField {
 	 * @param length Maximum number of characters to allow in the text field.
 	 */
 	public FixedTextField(int length) {
-		super(new FixedPlainDocument(length), "", 3);
+		super(new FixedPlainDocument(length), "", length);
 	}
 
 

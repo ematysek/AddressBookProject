@@ -26,6 +26,15 @@ public class ContactInfoPanel extends JPanel{
 	//Address
 	private JLabel lblAddress;
 	private JTextField txtAddress;
+	//City
+	private JLabel lblCity;
+	private JTextField txtCity;
+	//State
+	private JLabel lblState;
+	private JTextField txtState;
+	//zip
+	private JLabel lblZip;
+	private JTextField txtZip;
 	//Telephone Number
 	private JLabel telephoneNumber;
 	private JLabel hyphen;
@@ -56,11 +65,32 @@ public class ContactInfoPanel extends JPanel{
 		this.add(txtLastName);
 		
 		//Address
-		lblAddress = new JLabel("Address: ");
+		lblAddress = new JLabel("Street Address: ");
 		this.add(lblAddress);
 		
-		txtAddress = new JTextField(28);
+		txtAddress = new JTextField(25);
 		this.add(txtAddress);
+		
+		//City
+		lblCity = new JLabel("City: ");
+		this.add(lblCity);
+		
+		txtCity = new JTextField(10);
+		this.add(txtCity);
+		
+		//State
+		lblState = new JLabel("State: ");
+		this.add(lblState);
+		
+		txtState = new FixedTextField(2);
+		this.add(txtState);
+		
+		//Zip
+		lblZip = new JLabel("Zip: ");
+		this.add(lblZip);
+		
+		txtZip = new FixedTextField(5);
+		this.add(txtZip);
 		
 		//Telephone number
 		telephoneNumber = new JLabel("Telephone Number: ");
