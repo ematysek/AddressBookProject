@@ -83,10 +83,13 @@ public class AddressBookFrame extends JFrame {
 		 */
 	}
 
-	private void centerWindow(Window w) {
+	/**
+	 * @param window Window to center.
+	 */
+	private void centerWindow(Window window) {
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension d = tk.getScreenSize();
-		setLocation((d.width - w.getWidth()) / 2,
-				(d.height - w.getHeight()) / 2);
+		setLocation((d.width - window.getWidth()) / 2,
+				(d.height - window.getHeight()) / 2);
 	}
 }

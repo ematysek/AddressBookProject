@@ -10,15 +10,23 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 /**
+ * A panel containing a button toolbox.
+ * 
  * @author Eric Matysek
  * 
  */
 public class ButtonPanel extends JPanel {
 
+	// Buttons
 	private JButton newContact;
 	private JButton newGroup;
 	private JButton delete;
+	// Border
+	private Border border;
 
+	/**
+	 * Constructs a new panel containing buttons.
+	 */
 	public ButtonPanel() {
 		this.setLayout(new FlowLayout());
 
@@ -31,7 +39,7 @@ public class ButtonPanel extends JPanel {
 		delete = new JButton("Delete");
 		this.add(delete);
 
-		Border border = BorderFactory.createEtchedBorder();
+		border = BorderFactory.createEtchedBorder();
 
 		this.setBorder(BorderFactory.createTitledBorder(border, "Tools"));
 	}
