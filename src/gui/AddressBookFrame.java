@@ -33,9 +33,12 @@ public class AddressBookFrame extends JFrame {
 	
 	public AddressBookFrame(){
 		this.setTitle("Address Book");
-		this.setSize(800, 600);
+		//this.setSize(800, 600);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
+
+		this.setLayout(new GridBagLayout());
 		
 		//Declare and set menu bar
 		menuBar = new JMenuBar();
@@ -45,30 +48,26 @@ public class AddressBookFrame extends JFrame {
 		menuBar.add(editMenu);
 		this.setJMenuBar(menuBar);
 		
-		gridbag = new GridBagLayout();
-		this.setLayout(gridbag);
-		
-		c = new GridBagConstraints();
-		
+		//Declare and add button panel
 		buttonPanel = new ButtonPanel();
-		c.gridx = 1;
-		c.gridy = 0;
-		c.insets = new Insets(0,5,0,5);
-		this.add(buttonPanel, c);
+		this.add(buttonPanel, getConstraints(1, 0, 1, 1, GridBagConstraints.CENTER));
 		
+		//Declare and add contact info panel
 		contactInfoPanel = new ContactInfoPanel();
 		this.add(contactInfoPanel, getConstraints(1, 2, 1, 1, GridBagConstraints.NORTH));
 		
+		
+		//Declare and add contact list panel with JTree
 		contactListPanel = new ContactListPanel();
-		c.anchor = GridBagConstraints.WEST;
-		c.gridheight = 2;
-		c.gridx = 0;
-		c.gridy = 0;
-		this.add(contactListPanel, getConstraints(0, 0, 1, 3, GridBagConstraints.WEST));
+		this.add(contactListPanel, getConstraints(0, 0, 1, 3, GridBagConstraints.NORTHWEST));
 		
-		this.setLayout(gridbag);
-		
+		this.pack();
 		centerWindow(this);
+		/*
+		Dimension d = contactInfoPanel.getSize();
+		System.out.println(d.width);
+		System.out.println(d.height);
+		*/
 		}
 	
 	private void centerWindow(Window w){

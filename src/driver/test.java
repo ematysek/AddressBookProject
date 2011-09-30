@@ -1,5 +1,7 @@
 package driver;
 
+import java.awt.Dimension;
+
 import gui.AddressBookFrame;
 
 public class test {
@@ -11,7 +13,6 @@ public class test {
 		
 		AddressBookFrame frame = new AddressBookFrame();
 		frame.setVisible(true);
-
 	}
 
 }

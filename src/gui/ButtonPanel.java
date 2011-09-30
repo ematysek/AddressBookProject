@@ -11,14 +11,18 @@ import javax.swing.border.Border;
 
 public class ButtonPanel extends JPanel {
 
-	private JButton addContact;
+	private JButton newContact;
+	private JButton newGroup;
 	private JButton delete;
 	
 	public ButtonPanel(){
 		this.setLayout(new FlowLayout());
 		
-		addContact = new JButton("New Contact");
-		this.add(addContact);
+		newContact = new JButton("New Contact");
+		this.add(newContact);
+		
+		newGroup = new JButton("New Group");
+		this.add(newGroup);
 		
 		delete = new JButton("Delete");
 		this.add(delete);
