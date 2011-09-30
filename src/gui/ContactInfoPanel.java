@@ -41,6 +41,7 @@ public class ContactInfoPanel extends JPanel{
 	private JTextField areaCode;
 	private JTextField secondThreeDigits;
 	private JTextField lastFourDigits;
+	//cell number
 	
 
 	ContactInfoPanel(){

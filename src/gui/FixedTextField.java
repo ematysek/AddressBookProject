@@ -14,7 +14,7 @@ import javax.swing.text.PlainDocument;
 public class FixedTextField extends JTextField {
 
 	/**
-	 * Constructs a new text field with a maxmum number of characters
+	 * Constructs a new text field with a maximum number of characters.
 	 * @param length Maximum number of characters to allow in the text field.
 	 */
 	public FixedTextField(int length) {
