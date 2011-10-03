@@ -1,4 +1,4 @@
-package gui.panels.contactlist;
+package gui.panels.contactinfo;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

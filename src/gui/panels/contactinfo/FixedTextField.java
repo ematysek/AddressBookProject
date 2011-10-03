@@ -1,4 +1,4 @@
-package gui.panels.contactlist;
+package gui.panels.contactinfo;
 
 import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;

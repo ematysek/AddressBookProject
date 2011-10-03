@@ -1,4 +1,4 @@
-package gui.panels.contactlist;
+package gui.panels;
 
 import java.awt.Color;
 import java.awt.Dimension;

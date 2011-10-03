@@ -1,7 +1,5 @@
-package gui.panels;
+package gui.panels.contactinfo;
 
-import gui.panels.contactlist.FixedTextField;
-import gui.panels.contactlist.PhoneNumberPanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -42,6 +40,9 @@ public class ContactInfoPanel extends JPanel {
 	// zip
 	private JLabel lblZip;
 	private JTextField txtZip;
+	//email
+	private JLabel lblEmail;
+	private JTextField txtEmail;
 
 	public ContactInfoPanel() {
 		// this.setBackground(new Color(105));
@@ -94,6 +95,16 @@ public class ContactInfoPanel extends JPanel {
 
 		// Phone numbers
 		this.add(new PhoneNumberPanel());
+		
+		//Email address
+		lblEmail = new JLabel("Email Address: ");
+		this.add(lblEmail);
+		
+		txtEmail = new JTextField(20);
+		this.add(txtEmail);
+		
+		//Empty space
+		this.add(new JLabel("                                            "));
 	}
 
 }
