@@ -1,5 +1,9 @@
 package gui.panels;
 
+import gui.listeners.DeleteActionListener;
+import gui.listeners.NewContactActionListener;
+import gui.listeners.NewGroupActionListener;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,12 +35,15 @@ public class ButtonPanel extends JPanel {
 		this.setLayout(new FlowLayout());
 
 		newContact = new JButton("New Contact");
+		newContact.addActionListener(new NewContactActionListener());
 		this.add(newContact);
 
 		newGroup = new JButton("New Group");
+		newGroup.addActionListener(new NewGroupActionListener());
 		this.add(newGroup);
 
 		delete = new JButton("Delete");
+		delete.addActionListener(new DeleteActionListener());
 		this.add(delete);
 
 		border = BorderFactory.createEtchedBorder();
@@ -44,20 +51,5 @@ public class ButtonPanel extends JPanel {
 		this.setBorder(BorderFactory.createTitledBorder(border, "Tools"));
 	}
 
-	/**
-	 * inner class that handles actions of outer class
-	 * 
-	 * @author Eric Matysek
-	 * 
-	 */
-	class ButtonPanelActionListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
 
 }

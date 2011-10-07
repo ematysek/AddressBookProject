@@ -33,5 +33,20 @@ public class ConstraintsFactory {
 		c.anchor = anchor;
 		return c;
 	}
+	
+	public static GridBagConstraints getConstraints(int gridx, int gridy,
+			int gridwidth, int gridheight, int weightx, int weighty, int anchor, Insets insets) {
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.insets = insets;
+		c.gridx = gridx;
+		c.gridy = gridy;
+		c.gridwidth = gridwidth;
+		c.gridheight = gridheight;
+		c.weightx = weightx;
+		c.weighty = weighty;
+		c.anchor = anchor;
+		return c;
+	}
 
 }

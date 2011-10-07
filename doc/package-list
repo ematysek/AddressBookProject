@@ -1,4 +1,8 @@
+contacts
 driver
 gui
+gui.listeners
 gui.panels
-gui.panels.contactlist
+gui.panels.contactinfo
+gui.panels.info
+sql
