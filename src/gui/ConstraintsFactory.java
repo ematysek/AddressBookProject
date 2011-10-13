@@ -34,6 +34,18 @@ public class ConstraintsFactory {
 		return c;
 	}
 	
+	/**
+	 * Get GridBagConstraints using provided fields including weights.
+	 * @param gridx
+	 * @param gridy
+	 * @param gridwidth
+	 * @param gridheight
+	 * @param weightx
+	 * @param weighty
+	 * @param anchor
+	 * @param insets
+	 * @return
+	 */
 	public static GridBagConstraints getConstraints(int gridx, int gridy,
 			int gridwidth, int gridheight, int weightx, int weighty, int anchor, Insets insets) {
 		GridBagConstraints c = new GridBagConstraints();

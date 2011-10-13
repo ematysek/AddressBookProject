@@ -5,6 +5,8 @@ package contacts;
  *
  */
 public class Contact {
+	
+	//TODO DOCUMENTATION!!!
 
 	private String ID;
 	private String firstName;

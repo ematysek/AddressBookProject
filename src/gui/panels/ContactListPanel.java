@@ -2,12 +2,12 @@ package gui.panels;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeSelectionModel;
 
 /**
  * Panel containing the contact list JTree.
@@ -22,7 +22,8 @@ public class ContactListPanel extends JPanel {
 	// **************************************
 
 	private JTree contactTree;
-	private DefaultMutableTreeNode defaultNode;
+	private DefaultTreeModel treeModel;
+	private DefaultMutableTreeNode rootNode;
 	private DefaultMutableTreeNode group1;
 	private DefaultMutableTreeNode group2;
 
@@ -32,18 +33,23 @@ public class ContactListPanel extends JPanel {
 	public ContactListPanel() {
 		// this.setBackground(new Color(15));
 
+		rootNode = new DefaultMutableTreeNode("Contacts");
+
+		treeModel = new DefaultTreeModel(rootNode);
+
+		contactTree = new JTree(treeModel);
+		contactTree.setPreferredSize(new Dimension(200, 500));
+		contactTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+
 		group1 = new DefaultMutableTreeNode("group1");
 		group1.add(new DefaultMutableTreeNode("contact1"));
 
 		group2 = new DefaultMutableTreeNode("group2");
 		group2.add(new DefaultMutableTreeNode("contact2"));
+	
+		rootNode.add(group2);
+		rootNode.add(group1);
 
-		defaultNode = new DefaultMutableTreeNode("Contacts");
-		defaultNode.add(group1);
-		defaultNode.add(group2);
-
-		contactTree = new JTree(defaultNode);
-		contactTree.setPreferredSize(new Dimension(200, 500));
 		this.add(new JScrollPane(contactTree));
 		// this.add(contactTree);
 	}

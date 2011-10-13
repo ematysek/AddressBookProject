@@ -7,6 +7,8 @@ import java.util.ArrayList;
  *
  */
 public class ContactList {
+	
+	//TODO DOCUMENTATION!!!
 
 	private ArrayList<Contact> contactList;
 

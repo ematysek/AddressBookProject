@@ -5,9 +5,6 @@ import gui.listeners.NewContactActionListener;
 import gui.listeners.NewGroupActionListener;
 
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -49,6 +46,13 @@ public class ButtonPanel extends JPanel {
 		border = BorderFactory.createEtchedBorder();
 
 		this.setBorder(BorderFactory.createTitledBorder(border, "Tools"));
+	}
+
+	/**
+	 * @return the delete
+	 */
+	public JButton getDelete() {
+		return delete;
 	}
 
 

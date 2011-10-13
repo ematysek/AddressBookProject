@@ -1,7 +1,6 @@
 package driver;
 
-import java.awt.Dimension;
-
+import sql.JDBCTest;
 import gui.AddressBookFrame;
 
 public class test {
@@ -13,6 +12,9 @@ public class test {
 		
 		AddressBookFrame frame = new AddressBookFrame();
 		frame.setVisible(true);
+		
+		JDBCTest myConnection = new JDBCTest();
+		myConnection.printColumns();
 	}
 
 }

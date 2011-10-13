@@ -11,9 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import gui.ConstraintsFactory;
+import gui.listeners.DeleteActionListener;
 import gui.panels.ButtonPanel;
 import gui.panels.contactinfo.ContactInfoPanel;
 import gui.panels.info.InfoPanel;
@@ -78,10 +80,6 @@ public class AddressBookFrame extends JFrame {
 
 		this.pack();
 		centerWindow(this);
-		/*
-		 * Dimension d = contactInfoPanel.getSize();
-		 * System.out.println(d.width); System.out.println(d.height);
-		 */
 	}
 
 	/**
