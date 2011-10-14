@@ -1,6 +1,6 @@
 package driver;
 
-import sql.JDBCTest;
+import sql.JDBCConnection;
 import gui.AddressBookFrame;
 
 public class test {
@@ -13,8 +13,8 @@ public class test {
 		AddressBookFrame frame = new AddressBookFrame();
 		frame.setVisible(true);
 		
-		JDBCTest myConnection = new JDBCTest();
-		myConnection.printColumns();
+		JDBCConnection myConnection = new JDBCConnection();
+		myConnection.printAllContacts();
 	}
 
 }

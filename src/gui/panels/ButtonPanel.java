@@ -28,11 +28,11 @@ public class ButtonPanel extends JPanel {
 	/**
 	 * Constructs a new panel containing buttons.
 	 */
-	public ButtonPanel() {
+	public ButtonPanel(JPanel contactInfo, JPanel contactList) {
 		this.setLayout(new FlowLayout());
 
 		newContact = new JButton("New Contact");
-		newContact.addActionListener(new NewContactActionListener());
+		newContact.addActionListener(new NewContactActionListener(contactInfo, contactList));
 		this.add(newContact);
 
 		newGroup = new JButton("New Group");
@@ -40,7 +40,7 @@ public class ButtonPanel extends JPanel {
 		this.add(newGroup);
 
 		delete = new JButton("Delete");
-		delete.addActionListener(new DeleteActionListener());
+		delete.addActionListener(new DeleteActionListener(contactList));
 		this.add(delete);
 
 		border = BorderFactory.createEtchedBorder();

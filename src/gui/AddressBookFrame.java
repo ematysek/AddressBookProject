@@ -11,14 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import gui.ConstraintsFactory;
-import gui.listeners.DeleteActionListener;
 import gui.panels.ButtonPanel;
 import gui.panels.contactinfo.ContactInfoPanel;
-import gui.panels.info.InfoPanel;
 import gui.panels.ContactListPanel;
 
 /**
@@ -35,9 +32,6 @@ public class AddressBookFrame extends JFrame {
 	private JPanel buttonPanel;
 	private JPanel contactInfoPanel;
 	private JPanel contactListPanel;
-	// Layout
-	private GridBagLayout gridbag;
-	private GridBagConstraints c;
 	// Menu Bar
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
@@ -63,10 +57,6 @@ public class AddressBookFrame extends JFrame {
 		menuBar.add(editMenu);
 		this.setJMenuBar(menuBar);
 
-		// Declare and add button panel
-		buttonPanel = new ButtonPanel();
-		this.add(buttonPanel, ConstraintsFactory.getConstraints(1, 0, 1, 1,
-				GridBagConstraints.CENTER, insets));
 
 		// Declare and add contact info panel
 		contactInfoPanel = new ContactInfoPanel();
@@ -77,6 +67,11 @@ public class AddressBookFrame extends JFrame {
 		contactListPanel = new ContactListPanel();
 		this.add(contactListPanel, ConstraintsFactory.getConstraints(0, 0, 1,
 				3, GridBagConstraints.NORTHWEST, insets));
+		
+		// Declare and add button panel
+		buttonPanel = new ButtonPanel(contactInfoPanel, contactListPanel);
+		this.add(buttonPanel, ConstraintsFactory.getConstraints(1, 0, 1, 1,
+				GridBagConstraints.CENTER, insets));
 
 		this.pack();
 		centerWindow(this);
