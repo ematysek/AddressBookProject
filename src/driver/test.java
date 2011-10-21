@@ -15,6 +15,7 @@ public class test {
 		
 		JDBCConnection myConnection = new JDBCConnection();
 		myConnection.printAllContacts();
+	
 	}
 
 }

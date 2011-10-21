@@ -21,15 +21,15 @@ public class Contact {
 	
 	/**
 	 * @param ID
-	 * @param firstName
-	 * @param lastName
-	 * @param address
-	 * @param city
-	 * @param state
-	 * @param zip
-	 * @param homePhone
-	 * @param cellPhone
-	 * @param email
+	 * @param firstName first name
+	 * @param lastName last name
+	 * @param address address
+	 * @param city city
+	 * @param state state 
+	 * @param zip zip
+	 * @param homePhone home phone
+	 * @param cellPhone cell phone
+	 * @param email email
 	 */
 	public Contact(String ID, String firstName, String lastName, String address,
 			String city, String state, String zip, String homePhone,
@@ -179,6 +179,12 @@ public class Contact {
 		this.email = email;
 	}
 	
+	public String getNodeString(){
+		return (this.lastName + ", " + this.firstName);
+	}
 	
+	public String toString(){
+		return (this.firstName + " " + this.lastName);
+	}
 	
 }

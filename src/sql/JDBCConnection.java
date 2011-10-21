@@ -1,7 +1,12 @@
 package sql;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Properties;
 
 import contacts.*;
 
@@ -10,8 +15,8 @@ import contacts.*;
  * 					the constructor creates the connection; the methods print all contacts,
  * 					get all contacts as an ArrayList of Contact objects, add a Contact, 
  * 					update the db entry for a Contact, remove a Contact from the db, and close the connection.
- * @author:       	jarrett n. tolman
- * @since:        	Oct 6, 2011
+ * @author       	jarrett n. tolman
+ * @since        	Oct 6, 2011
  * @version 		1.0
  * @see				Contact
  */
@@ -118,6 +123,15 @@ public class JDBCConnection {
 		return contacts;
 		
 	}
+	
+	/**
+	 * Returns a ContactList of Contacts populated from the contact table.
+	 * 
+	 * @return a ContactList of Contact objects.
+	 */
+	public ContactList getContactList() {
+		return new ContactList(this.getAllContacts());
+	}
 
 	/**
 	 * adds Contact object to contact table
@@ -168,11 +182,28 @@ public class JDBCConnection {
 			statement = connection.createStatement();
 			statement.execute("UPDATE contactinfo SET firstname='" + contact.getFirstName() + "', lastname='" + contact.getLastName() + "', address='" + contact.getAddress() + 
 					"', city='" + contact.getCity() + "', state='" + contact.getState() + "', zip='" + contact.getZip() + "', homephone='" + contact.getHomePhone() + 
-					"', cellphone='" + contact.getCellPhone() + "', email='" + contact.getEmail() + "' WHERE contact.id=" + contact.getID());
+					"', cellphone='" + contact.getCellPhone() + "', email='" + contact.getEmail() + "' WHERE ID=" + contact.getID());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public Contact getContact(int id) {
+		Statement statement = null;
+		Contact contact = null;
+		try{
+			statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM contactinfo WHERE id=" + id);
+			contact = new Contact(Integer.toString((rs.getInt("id"))), rs.getString("firstname"), rs.getString("lastname"), rs.getString("address"), rs.getString("city"),
+											rs.getString("state"), rs.getString("zip"), rs.getString("homephone"), rs.getString("cellphone"), rs.getString("email"));
+				
+		} catch (SQLException e) {
+		e.printStackTrace();
+		}
+		
+		return contact;
+	
 	}
 	
 	/**

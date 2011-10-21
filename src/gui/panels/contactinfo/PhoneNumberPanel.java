@@ -28,6 +28,9 @@ public class PhoneNumberPanel extends JPanel {
 	private JTextField cellAreaCode;
 	private JTextField cellThreeDigits;
 	private JTextField cellFourDigits;
+	//Phone Numbers
+	private String homePhone;
+	private String cellPhone;
 
 	public PhoneNumberPanel() {
 		this.setLayout(new GridBagLayout());
@@ -86,5 +89,64 @@ public class PhoneNumberPanel extends JPanel {
 		cellFourDigits = new FixedTextField(4);
 		this.add(cellFourDigits, ConstraintsFactory.getConstraints(5, 1, 1, 1,
 				GridBagConstraints.CENTER, insets));
+	}
+	
+	public void clearFields(){
+		homeAreaCode.setText("");
+		homeThreeDigits.setText("");
+		homeFourDigits.setText("");
+		cellAreaCode.setText("");
+		cellThreeDigits.setText("");
+		cellFourDigits.setText("");
+	}
+
+	/**
+	 * @return the homeAreaCode
+	 */
+	public JTextField getHomeAreaCode() {
+		return homeAreaCode;
+	}
+
+	/**
+	 * @return the homeThreeDigits
+	 */
+	public JTextField getHomeThreeDigits() {
+		return homeThreeDigits;
+	}
+
+	/**
+	 * @return the homeFourDigits
+	 */
+	public JTextField getHomeFourDigits() {
+		return homeFourDigits;
+	}
+
+	/**
+	 * @return the cellAreaCode
+	 */
+	public JTextField getCellAreaCode() {
+		return cellAreaCode;
+	}
+
+	/**
+	 * @return the cellThreeDigits
+	 */
+	public JTextField getCellThreeDigits() {
+		return cellThreeDigits;
+	}
+
+	/**
+	 * @return the cellFourDigits
+	 */
+	public JTextField getCellFourDigits() {
+		return cellFourDigits;
+	}
+	
+	public String getHomePhone(){
+	return (homeAreaCode.getText() + homeThreeDigits.getText() + homeFourDigits.getText());
+	}
+	
+	public String getCellPhone(){
+	return (cellAreaCode.getText() + cellThreeDigits.getText() + homeFourDigits.getText());
 	}
 }

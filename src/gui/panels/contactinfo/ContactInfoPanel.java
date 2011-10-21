@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import contacts.Contact;
+
 /**
  * @author Eric Matysek
  * 
@@ -39,6 +41,8 @@ public class ContactInfoPanel extends JPanel {
 	// zip
 	private JLabel lblZip;
 	private JTextField txtZip;
+	//Phone Numbers
+	private JPanel phoneNumberPanel;
 	// email
 	private JLabel lblEmail;
 	private JTextField txtEmail;
@@ -48,7 +52,7 @@ public class ContactInfoPanel extends JPanel {
 		flow = new FlowLayout();
 		flow.setVgap(10);
 		this.setLayout(flow);
-		this.setPreferredSize(new Dimension(390, 200));
+		this.setPreferredSize(new Dimension(390, 300));
 
 		// First name
 		lblFirstName = new JLabel("First Name: ");
@@ -93,7 +97,8 @@ public class ContactInfoPanel extends JPanel {
 		this.add(txtZip);
 
 		// Phone numbers
-		this.add(new PhoneNumberPanel());
+		phoneNumberPanel = new PhoneNumberPanel();
+		this.add(phoneNumberPanel);
 
 		// Email address
 		lblEmail = new JLabel("Email Address: ");
@@ -103,7 +108,87 @@ public class ContactInfoPanel extends JPanel {
 		this.add(txtEmail);
 
 		// Empty space
-		this.add(new JLabel("                                            "));
+		//this.add(new JLabel("                                            "));
+		
+		
+		this.add(new InfoButtonPanel(this));
+	}
+	
+	public void clearFields(){
+		txtFirstName.setText("");
+		txtLastName.setText("");
+		txtAddress.setText("");
+		txtCity.setText("");
+		txtState.setText("");
+		txtZip.setText("");
+		((PhoneNumberPanel) phoneNumberPanel).clearFields();
+		txtEmail.setText("");
+	}
+	
+	public Contact getContact(){
+		Contact contact = new Contact(null, txtFirstName.getText(), txtLastName.getText(), txtAddress.getText(), 
+			txtCity.getText(), txtState.getText(), txtZip.getText(), 
+			((PhoneNumberPanel) phoneNumberPanel).getHomePhone(), 
+			((PhoneNumberPanel) phoneNumberPanel).getCellPhone(), 
+			txtEmail.getText());
+			
+		return contact;
+	}
+
+	/**
+	 * @return the txtFirstName
+	 */
+	public JTextField getTxtFirstName() {
+		return txtFirstName;
+	}
+
+	/**
+	 * @return the txtLastName
+	 */
+	public JTextField getTxtLastName() {
+		return txtLastName;
+	}
+
+	/**
+	 * @return the txtAddress
+	 */
+	public JTextField getTxtAddress() {
+		return txtAddress;
+	}
+
+	/**
+	 * @return the txtCity
+	 */
+	public JTextField getTxtCity() {
+		return txtCity;
+	}
+
+	/**
+	 * @return the txtState
+	 */
+	public JTextField getTxtState() {
+		return txtState;
+	}
+
+	/**
+	 * @return the txtZip
+	 */
+	public JTextField getTxtZip() {
+		return txtZip;
+	}
+
+	/**
+	 * @return the phoneNumberPanel
+	 */
+	public JPanel getPhoneNumberPanel() {
+		return phoneNumberPanel;
+	}
+
+	/**
+	 * @return the txtEmail
+	 */
+	public JTextField getTxtEmail() {
+		return txtEmail;
 	}
 
 }

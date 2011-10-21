@@ -1,5 +1,7 @@
 package gui.panels;
 
+import gui.listeners.SelectionListener;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
@@ -9,6 +11,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
+import sql.JDBCConnection;
+
+import contacts.*;
+
 /**
  * Panel containing the contact list JTree.
  * 
@@ -17,41 +23,72 @@ import javax.swing.tree.TreeSelectionModel;
  */
 public class ContactListPanel extends JPanel {
 
+	// 228
+	// 413
+
 	// **************************************
 	// Class-Level Variables / GUI Components
 	// **************************************
 
+	// Tree
 	private JTree contactTree;
 	private DefaultTreeModel treeModel;
 	private DefaultMutableTreeNode rootNode;
 	private DefaultMutableTreeNode group1;
 	private DefaultMutableTreeNode group2;
+	// Scrollpane
+	private JScrollPane scrollPane;
+	// Contacts
+	private ContactList contactList;
+	// Database Connection
+	private JDBCConnection connection;
+	// Panel
+	private JPanel contactInfoPanel;
 
 	/**
 	 * Constructs a new contact list panel containing a JTree.
 	 */
-	public ContactListPanel() {
-		// this.setBackground(new Color(15));
+	public ContactListPanel(JPanel contactInfoPanel) {
+		this.contactInfoPanel = contactInfoPanel;
 
-		rootNode = new DefaultMutableTreeNode("Contacts");
+		this.rootNode = new DefaultMutableTreeNode("Contacts");
 
-		treeModel = new DefaultTreeModel(rootNode);
+		this.treeModel = new DefaultTreeModel(rootNode);
 
 		contactTree = new JTree(treeModel);
-		contactTree.setPreferredSize(new Dimension(200, 500));
+		// contactTree.setPreferredSize(new Dimension(200, 500));
 		contactTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		contactTree.addTreeSelectionListener(new SelectionListener(this, contactInfoPanel));
 
-		group1 = new DefaultMutableTreeNode("group1");
-		group1.add(new DefaultMutableTreeNode("contact1"));
+		connection = new JDBCConnection();
 
-		group2 = new DefaultMutableTreeNode("group2");
-		group2.add(new DefaultMutableTreeNode("contact2"));
-	
-		rootNode.add(group2);
-		rootNode.add(group1);
+		contactList = connection.getContactList();
+		for (int i = contactList.size() - 1; i >= 0; i--) {
+			Contact c = contactList.get(i);
+			treeModel.insertNodeInto(new DefaultMutableTreeNode(c.getNodeString()), rootNode, 0);
+			// rootNode.add(new DefaultMutableTreeNode(c.getNodeString()));
+		}
 
-		this.add(new JScrollPane(contactTree));
+		scrollPane = new JScrollPane(contactTree);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setPreferredSize(new Dimension(215, 413));
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		this.add(scrollPane);
 		// this.add(contactTree);
+	}
+
+	/**
+	 * @return the contactTree
+	 */
+	public JTree getContactTree() {
+		return contactTree;
+	}
+
+	/**
+	 * @return the rootNode
+	 */
+	public DefaultMutableTreeNode getRootNode() {
+		return rootNode;
 	}
 
 }

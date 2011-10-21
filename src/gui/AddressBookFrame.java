@@ -16,6 +16,7 @@ import javax.swing.WindowConstants;
 import gui.ConstraintsFactory;
 import gui.panels.ButtonPanel;
 import gui.panels.contactinfo.ContactInfoPanel;
+import gui.panels.info.InfoPanel;
 import gui.panels.ContactListPanel;
 
 /**
@@ -64,7 +65,7 @@ public class AddressBookFrame extends JFrame {
 				1, GridBagConstraints.NORTH, insets));
 
 		// Declare and add contact list panel with JTree
-		contactListPanel = new ContactListPanel();
+		contactListPanel = new ContactListPanel(contactInfoPanel);
 		this.add(contactListPanel, ConstraintsFactory.getConstraints(0, 0, 1,
 				3, GridBagConstraints.NORTHWEST, insets));
 		
