@@ -34,8 +34,6 @@ public class ContactListPanel extends JPanel {
 	private JTree contactTree;
 	private DefaultTreeModel treeModel;
 	private DefaultMutableTreeNode rootNode;
-	private DefaultMutableTreeNode group1;
-	private DefaultMutableTreeNode group2;
 	// Scrollpane
 	private JScrollPane scrollPane;
 	// Contacts
@@ -54,27 +52,39 @@ public class ContactListPanel extends JPanel {
 		this.rootNode = new DefaultMutableTreeNode("Contacts");
 
 		this.treeModel = new DefaultTreeModel(rootNode);
+		
+		this.connection = new JDBCConnection();
 
-		contactTree = new JTree(treeModel);
+		this.contactTree = new JTree(treeModel);
 		// contactTree.setPreferredSize(new Dimension(200, 500));
 		contactTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		contactTree.addTreeSelectionListener(new SelectionListener(this, contactInfoPanel));
 
-		connection = new JDBCConnection();
+		
 
-		contactList = connection.getContactList();
+		this.contactList = connection.getContactList();
 		for (int i = contactList.size() - 1; i >= 0; i--) {
 			Contact c = contactList.get(i);
 			treeModel.insertNodeInto(new DefaultMutableTreeNode(c.getNodeString()), rootNode, 0);
 			// rootNode.add(new DefaultMutableTreeNode(c.getNodeString()));
 		}
 
-		scrollPane = new JScrollPane(contactTree);
+		this.scrollPane = new JScrollPane(contactTree);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setPreferredSize(new Dimension(215, 413));
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.add(scrollPane);
 		// this.add(contactTree);
+	}
+	
+	public int getSelectedIndex(){
+		DefaultMutableTreeNode tempNode = (DefaultMutableTreeNode) contactTree.getLastSelectedPathComponent();
+		if(tempNode == null){
+			return -2;
+		}
+		int index = rootNode.getIndex(tempNode);
+		
+		return index;
 	}
 
 	/**
@@ -89,6 +99,13 @@ public class ContactListPanel extends JPanel {
 	 */
 	public DefaultMutableTreeNode getRootNode() {
 		return rootNode;
+	}
+
+	/**
+	 * @return the contactList
+	 */
+	public ContactList getContactList() {
+		return contactList;
 	}
 
 }

@@ -15,6 +15,9 @@ public class test {
 		
 		JDBCConnection myConnection = new JDBCConnection();
 		myConnection.printAllContacts();
+		
+		//TODO possibly create a static method somewhere that provides a JDBCConnection 
+		//object to other classes instead of constructing new ones everywhere they are needed
 	
 	}
 

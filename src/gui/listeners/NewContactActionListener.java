@@ -21,7 +21,7 @@ public class NewContactActionListener implements ActionListener{
 
 	public NewContactActionListener(JPanel contactInfo, JPanel contactList){
 		this.contactInfo = contactInfo;
-		this.contactList = (ContactListPanel) contactList;
+		this.contactList = contactList;
 	}
 	
 	@Override

@@ -7,6 +7,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import sql.JDBCConnection;
+
+import contacts.Contact;
+import contacts.ContactList;
+
 /**
  * Create an action listener for a specific event.
  * 
@@ -15,17 +20,25 @@ import javax.swing.JPanel;
  */
 public class DeleteActionListener implements ActionListener {
 
-	JPanel contactList;
-	
-	public DeleteActionListener(JPanel contactList){
-		this.contactList = (ContactListPanel) contactList;
+	private ContactListPanel contactListPanel;
+	private JDBCConnection connection;
+
+	public DeleteActionListener(JPanel contactListPanel) {
+		this.contactListPanel = (ContactListPanel) contactListPanel;
+		this.connection = new JDBCConnection();
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 
-		
+		ContactList contactList = contactListPanel.getContactList();
+		int index = contactListPanel.getSelectedIndex();
+		if(index >= 0){
+			Contact contact = contactList.get(index);
+			int contactID = Integer.parseInt(contact.getID());
+			connection.removeContact(contactID);
+		} else {
+			//TODO pop-up explaining no contact is selected.
+		}
 	}
-
 }
