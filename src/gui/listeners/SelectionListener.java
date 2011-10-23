@@ -29,27 +29,19 @@ public class SelectionListener implements TreeSelectionListener {
 
 	@Override
 	public void valueChanged(TreeSelectionEvent arg0) {
-		// TODO line 46
+		// TODO line 38
 
-		JTree tree = ((ContactListPanel) contactListPanel).getContactTree();
-
-		//Get selected node
-		DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-
-		//if node is seleted, get index of node
-		if (node != null) {
-			DefaultMutableTreeNode rootNode = ((ContactListPanel) contactListPanel).getRootNode();
-			int index = rootNode.getIndex(node);
-			if (index >= 0) {
-				System.out.println(index);
-				ContactList contactList = connection.getContactList();
-				Contact contact = contactList.get(index); //change to connection.get(index)
-				populateContactInfo(contact);
-			}
+		int index = ((ContactListPanel) contactListPanel).getSelectedIndex();
+		if (index >= 0) {
+			//System.out.println(index);
+			ContactList contactList = connection.getContactList();
+			Contact contact = contactList.get(index); //change to connection.get(index)
+			populateContactInfo(contact);
 		}
-
+		
 	}
 	
+	//should this method be in this class?
 	private void populateContactInfo(Contact contact){
 	PhoneNumberPanel phoneNumberPanel = (PhoneNumberPanel) contactInfoPanel.getPhoneNumberPanel();
 	
