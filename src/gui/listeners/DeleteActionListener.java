@@ -40,10 +40,7 @@ public class DeleteActionListener implements ActionListener {
 			connection.removeContact(contactID);
 		} else {
 			//TODO pop-up explaining no contact is selected.
-<<<<<<< HEAD
 			JOptionPane.showMessageDialog(contactListPanel, "No contact was selected", "Error", JOptionPane.ERROR_MESSAGE);
-=======
->>>>>>> d33705940b66f26a560eb95324ce50c0be464128
 		}
 	}
 }

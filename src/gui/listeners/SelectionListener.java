@@ -31,7 +31,6 @@ public class SelectionListener implements TreeSelectionListener {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public void valueChanged(TreeSelectionEvent tse) {
 		// TODO line 38
 
@@ -51,18 +50,6 @@ public class SelectionListener implements TreeSelectionListener {
 			}
 			contactInfoPanel.clearFields();
 		}
-=======
-	public void valueChanged(TreeSelectionEvent arg0) {
-		// TODO line 38
-
-		int index = ((ContactListPanel) contactListPanel).getSelectedIndex();
-		if (index >= 0) {
-			//System.out.println(index);
-			ContactList contactList = connection.getContactList();
-			Contact contact = contactList.get(index); //change to connection.get(index)
-			populateContactInfo(contact);
-		}
->>>>>>> d33705940b66f26a560eb95324ce50c0be464128
 		
 	}
 	
