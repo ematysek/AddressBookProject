@@ -69,6 +69,9 @@ public class AddressBookFrame extends JFrame {
 		this.add(contactListPanel, ConstraintsFactory.getConstraints(0, 0, 1,
 				3, GridBagConstraints.NORTHWEST, insets));
 		
+		// Pass contactListPanel to the contactInfoPanel
+		((ContactInfoPanel) contactInfoPanel).setContactListPanel(contactListPanel);
+		
 		// Declare and add button panel
 		buttonPanel = new ButtonPanel(contactInfoPanel, contactListPanel);
 		this.add(buttonPanel, ConstraintsFactory.getConstraints(1, 0, 1, 1,

@@ -1,5 +1,7 @@
 package gui.panels.contactinfo;
 
+import gui.panels.ContactListPanel;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -42,10 +44,14 @@ public class ContactInfoPanel extends JPanel {
 	private JLabel lblZip;
 	private JTextField txtZip;
 	//Phone Numbers
-	private JPanel phoneNumberPanel;
+	private PhoneNumberPanel phoneNumberPanel;
 	// email
 	private JLabel lblEmail;
 	private JTextField txtEmail;
+	//jlist
+	private ContactListPanel contactListPanel;
+	// lower button panel
+	private InfoButtonPanel infoButtonPanel;
 
 	public ContactInfoPanel() {
 		// this.setBackground(new Color(105));
@@ -110,8 +116,9 @@ public class ContactInfoPanel extends JPanel {
 		// Empty space
 		//this.add(new JLabel("                                            "));
 		
-		
-		this.add(new InfoButtonPanel(this));
+		// lower button panel
+		infoButtonPanel = new InfoButtonPanel(this);
+		this.add(infoButtonPanel);
 	}
 	
 	public void clearFields(){
@@ -126,10 +133,10 @@ public class ContactInfoPanel extends JPanel {
 	}
 	
 	public Contact getContact(){
-		Contact contact = new Contact(null, txtFirstName.getText(), txtLastName.getText(), txtAddress.getText(), 
+		Contact contact = new Contact("0", txtFirstName.getText(), txtLastName.getText(), txtAddress.getText(), 
 			txtCity.getText(), txtState.getText(), txtZip.getText(), 
-			((PhoneNumberPanel) phoneNumberPanel).getHomePhone(), 
-			((PhoneNumberPanel) phoneNumberPanel).getCellPhone(), 
+			phoneNumberPanel.getHomePhone(), 
+			phoneNumberPanel.getCellPhone(), 
 			txtEmail.getText());
 			
 		return contact;
@@ -189,6 +196,18 @@ public class ContactInfoPanel extends JPanel {
 	 */
 	public JTextField getTxtEmail() {
 		return txtEmail;
+	}
+	
+	public void setContactListPanel(JPanel contactListPanel){
+		this.contactListPanel = (ContactListPanel) contactListPanel;
+		infoButtonPanel.setContactListPanel(contactListPanel);
+	}
+
+	/**
+	 * @return the infoButtonPanel
+	 */
+	public InfoButtonPanel getInfoButtonPanel() {
+		return infoButtonPanel;
 	}
 
 }

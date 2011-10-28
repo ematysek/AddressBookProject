@@ -15,7 +15,7 @@ import contacts.*;
  * 					the constructor creates the connection; the methods print all contacts,
  * 					get all contacts as an ArrayList of Contact objects, add a Contact, 
  * 					update the db entry for a Contact, remove a Contact from the db, and close the connection.
- * @author       	jarrett n. tolman
+ * @author      	jarrett n. tolman
  * @since        	Oct 6, 2011
  * @version 		1.0
  * @see				Contact
@@ -163,7 +163,7 @@ public class JDBCConnection {
 		Statement statement = null;
 		try {
 			statement = connection.createStatement();
-			statement.execute("DELETE FROM contactinfo WHERE contact.id=" + id);
+			statement.execute("DELETE FROM contactinfo WHERE id=" + id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -189,6 +189,10 @@ public class JDBCConnection {
 		
 	}
 	
+	/**
+	 * @param id
+	 * @return
+	 */
 	public Contact getContact(int id) {
 		Statement statement = null;
 		Contact contact = null;

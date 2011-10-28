@@ -61,13 +61,8 @@ public class ContactListPanel extends JPanel {
 		contactTree.addTreeSelectionListener(new SelectionListener(this, contactInfoPanel));
 
 		
-
-		this.contactList = connection.getContactList();
-		for (int i = contactList.size() - 1; i >= 0; i--) {
-			Contact c = contactList.get(i);
-			treeModel.insertNodeInto(new DefaultMutableTreeNode(c.getNodeString()), rootNode, 0);
-			// rootNode.add(new DefaultMutableTreeNode(c.getNodeString()));
-		}
+//TODO replace with this.refreshList();
+		this.refreshList();
 
 		this.scrollPane = new JScrollPane(contactTree);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -106,6 +101,16 @@ public class ContactListPanel extends JPanel {
 	 */
 	public ContactList getContactList() {
 		return contactList;
+	}
+	
+	public void refreshList(){
+		this.contactList = connection.getContactList();
+		for (int i = contactList.size() - 1; i >= 0; i--) {
+			Contact c = contactList.get(i);
+			treeModel.insertNodeInto(new DefaultMutableTreeNode(c.getNodeString()), rootNode, 0);
+			// rootNode.add(new DefaultMutableTreeNode(c.getNodeString()));
+		}
+	
 	}
 
 }

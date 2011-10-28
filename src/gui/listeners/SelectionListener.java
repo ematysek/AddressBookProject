@@ -13,30 +13,42 @@ import contacts.ContactList;
 
 import gui.panels.ContactListPanel;
 import gui.panels.contactinfo.ContactInfoPanel;
+import gui.panels.contactinfo.InfoButtonPanel;
 import gui.panels.contactinfo.PhoneNumberPanel;
 
 public class SelectionListener implements TreeSelectionListener {
 
-	private JPanel contactListPanel;
+	private ContactListPanel contactListPanel;
 	private ContactInfoPanel contactInfoPanel;
+	private InfoButtonPanel infoButtonPanel;
 	private JDBCConnection connection;
 
 	public SelectionListener(JPanel contactListPanel, JPanel contactInfoPanel) {
-		this.contactListPanel = contactListPanel;
+		this.contactListPanel = (ContactListPanel) contactListPanel;
 		this.contactInfoPanel = (ContactInfoPanel) contactInfoPanel;
-		connection = new JDBCConnection();
+		this.infoButtonPanel = this.contactInfoPanel.getInfoButtonPanel();
+		this.connection = new JDBCConnection();
 	}
 
 	@Override
-	public void valueChanged(TreeSelectionEvent arg0) {
+	public void valueChanged(TreeSelectionEvent tse) {
 		// TODO line 38
 
-		int index = ((ContactListPanel) contactListPanel).getSelectedIndex();
-		if (index >= 0) {
+		int selectedIndex = contactListPanel.getSelectedIndex();
+		if (selectedIndex >= 0) {
 			//System.out.println(index);
+			if(!infoButtonPanel.getSaveChanges().isEnabled()){
+				infoButtonPanel.getSaveChanges().setEnabled(true);
+			}
 			ContactList contactList = connection.getContactList();
-			Contact contact = contactList.get(index); //change to connection.get(index)
+			Contact contact = contactList.get(selectedIndex); //change to connection.get(index)
 			populateContactInfo(contact);
+		}
+		else {
+			if(infoButtonPanel.getSaveChanges().isEnabled()){
+				infoButtonPanel.getSaveChanges().setEnabled(false);
+			}
+			contactInfoPanel.clearFields();
 		}
 		
 	}
