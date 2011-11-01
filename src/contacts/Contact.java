@@ -2,11 +2,11 @@ package contacts;
 
 /**
  * @author Eric Matysek
- *
+ * 
  */
-public class Contact {
-	
-	//TODO DOCUMENTATION!!!
+public class Contact implements Comparable {
+
+	// TODO DOCUMENTATION!!!
 
 	private String ID;
 	private String firstName;
@@ -18,22 +18,31 @@ public class Contact {
 	private String homePhone;
 	private String cellPhone;
 	private String email;
-	
+
 	/**
 	 * @param ID
-	 * @param firstName first name
-	 * @param lastName last name
-	 * @param address address
-	 * @param city city
-	 * @param state state 
-	 * @param zip zip
-	 * @param homePhone home phone
-	 * @param cellPhone cell phone
-	 * @param email email
+	 * @param firstName
+	 *            first name
+	 * @param lastName
+	 *            last name
+	 * @param address
+	 *            address
+	 * @param city
+	 *            city
+	 * @param state
+	 *            state
+	 * @param zip
+	 *            zip
+	 * @param homePhone
+	 *            home phone
+	 * @param cellPhone
+	 *            cell phone
+	 * @param email
+	 *            email
 	 */
-	public Contact(String ID, String firstName, String lastName, String address,
-			String city, String state, String zip, String homePhone,
-			String cellPhone, String email) {
+	public Contact(String ID, String firstName, String lastName,
+			String address, String city, String state, String zip,
+			String homePhone, String cellPhone, String email) {
 		this.ID = ID;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -61,7 +70,8 @@ public class Contact {
 	}
 
 	/**
-	 * @param firstName the firstName to set
+	 * @param firstName
+	 *            the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -75,7 +85,8 @@ public class Contact {
 	}
 
 	/**
-	 * @param lastName the lastName to set
+	 * @param lastName
+	 *            the lastName to set
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -89,7 +100,8 @@ public class Contact {
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param address
+	 *            the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
@@ -103,7 +115,8 @@ public class Contact {
 	}
 
 	/**
-	 * @param city the city to set
+	 * @param city
+	 *            the city to set
 	 */
 	public void setCity(String city) {
 		this.city = city;
@@ -117,7 +130,8 @@ public class Contact {
 	}
 
 	/**
-	 * @param state the state to set
+	 * @param state
+	 *            the state to set
 	 */
 	public void setState(String state) {
 		this.state = state;
@@ -131,7 +145,8 @@ public class Contact {
 	}
 
 	/**
-	 * @param zip the zip to set
+	 * @param zip
+	 *            the zip to set
 	 */
 	public void setZip(String zip) {
 		this.zip = zip;
@@ -145,7 +160,8 @@ public class Contact {
 	}
 
 	/**
-	 * @param homePhone the homePhone to set
+	 * @param homePhone
+	 *            the homePhone to set
 	 */
 	public void setHomePhone(String homePhone) {
 		this.homePhone = homePhone;
@@ -159,7 +175,8 @@ public class Contact {
 	}
 
 	/**
-	 * @param cellPhone the cellPhone to set
+	 * @param cellPhone
+	 *            the cellPhone to set
 	 */
 	public void setCellPhone(String cellPhone) {
 		this.cellPhone = cellPhone;
@@ -173,18 +190,26 @@ public class Contact {
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param email
+	 *            the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public String getNodeString(){
+
+	public String getNodeString() {
 		return (this.lastName + ", " + this.firstName);
 	}
-	
-	public String toString(){
+
+	@Override
+	public String toString() {
 		return (this.firstName + " " + this.lastName);
 	}
-	
+
+	@Override
+	public int compareTo(Object obj) {
+		Contact c = (Contact) obj;
+		return this.lastName.compareToIgnoreCase(c.lastName);
+	}
+
 }

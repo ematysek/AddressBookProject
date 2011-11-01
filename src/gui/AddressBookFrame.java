@@ -76,6 +76,9 @@ public class AddressBookFrame extends JFrame {
 		buttonPanel = new ButtonPanel(contactInfoPanel, contactListPanel);
 		this.add(buttonPanel, ConstraintsFactory.getConstraints(1, 0, 1, 1,
 				GridBagConstraints.CENTER, insets));
+		
+		// pass buttonPanel to contactListPanel
+		((ContactListPanel) contactListPanel).setButtonPanel(buttonPanel);
 
 		this.pack();
 		centerWindow(this);

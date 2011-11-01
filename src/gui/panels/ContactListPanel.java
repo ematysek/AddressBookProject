@@ -42,6 +42,7 @@ public class ContactListPanel extends JPanel {
 	private JDBCConnection connection;
 	// Panel
 	private JPanel contactInfoPanel;
+	private JPanel buttonPanel;
 
 	/**
 	 * Constructs a new contact list panel containing a JTree.
@@ -58,7 +59,7 @@ public class ContactListPanel extends JPanel {
 		this.contactTree = new JTree(treeModel);
 		// contactTree.setPreferredSize(new Dimension(200, 500));
 		contactTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		contactTree.addTreeSelectionListener(new SelectionListener(this, contactInfoPanel));
+		
 
 		
 //TODO replace with this.refreshList();
@@ -103,8 +104,17 @@ public class ContactListPanel extends JPanel {
 		return contactList;
 	}
 	
+	/**
+	 * @param buttonPanel the buttonPanel to set
+	 */
+	public void setButtonPanel(JPanel buttonPanel) {
+		this.buttonPanel = buttonPanel;
+		contactTree.addTreeSelectionListener(new SelectionListener(this, contactInfoPanel, buttonPanel));
+	}
+
 	public void refreshList(){
-		this.contactList = connection.getContactList();
+		this.contactList = connection.getSortedContactList();
+		System.out.println("called");
 		for (int i = contactList.size() - 1; i >= 0; i--) {
 			Contact c = contactList.get(i);
 			treeModel.insertNodeInto(new DefaultMutableTreeNode(c.getNodeString()), rootNode, 0);

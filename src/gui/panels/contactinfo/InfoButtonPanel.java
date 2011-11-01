@@ -1,5 +1,7 @@
 package gui.panels.contactinfo;
 
+import gui.Validator;
+
 import gui.panels.ContactListPanel;
 
 import java.awt.FlowLayout;
@@ -8,6 +10,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 import contacts.Contact;
 
@@ -23,6 +26,8 @@ public class InfoButtonPanel extends JPanel implements ActionListener {
 	private ContactListPanel contactListPanel;
 	//Database Connection
 	private JDBCConnection connection;
+	// Field Validator
+	private Validator validator;
 
 	public InfoButtonPanel(JPanel contactInfoPanel) {
 		this.setLayout(new FlowLayout());
@@ -31,22 +36,29 @@ public class InfoButtonPanel extends JPanel implements ActionListener {
 		this.contactListPanel = (ContactListPanel) contactListPanel;
 		connection = new JDBCConnection();
 
-		saveChanges = new JButton("Save Changes");
+		this.saveChanges = new JButton("Save Changes");
 		saveChanges.setEnabled(false);
 		saveChanges.addActionListener(this);
 		this.add(saveChanges);
 
-		clear = new JButton("Clear Fields");
+		this.clear = new JButton("Clear Fields");
 		clear.addActionListener(this);
 		this.add(clear);
 
+		validator = new Validator(contactInfoPanel);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == saveChanges) {
-			Contact contact = contactInfoPanel.getContact();
-			connection.updateContact(contact);
+			String errorMessages = validator.validateFields();
+			if(errorMessages.equals("")){
+				Contact contact = contactInfoPanel.getContact();
+				connection.updateContact(contact);
+			} else {
+				JOptionPane.showMessageDialog(contactInfoPanel, errorMessages, "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			
 		} else if (e.getSource() == clear) {
 			((ContactInfoPanel) contactInfoPanel).clearFields();
 		}

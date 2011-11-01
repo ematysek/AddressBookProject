@@ -11,6 +11,7 @@ import sql.JDBCConnection;
 import contacts.Contact;
 import contacts.ContactList;
 
+import gui.panels.ButtonPanel;
 import gui.panels.ContactListPanel;
 import gui.panels.contactinfo.ContactInfoPanel;
 import gui.panels.contactinfo.InfoButtonPanel;
@@ -18,14 +19,16 @@ import gui.panels.contactinfo.PhoneNumberPanel;
 
 public class SelectionListener implements TreeSelectionListener {
 
+	private ButtonPanel buttonPanel;
 	private ContactListPanel contactListPanel;
 	private ContactInfoPanel contactInfoPanel;
 	private InfoButtonPanel infoButtonPanel;
 	private JDBCConnection connection;
 
-	public SelectionListener(JPanel contactListPanel, JPanel contactInfoPanel) {
+	public SelectionListener(JPanel contactListPanel, JPanel contactInfoPanel, JPanel buttonPanel) {
 		this.contactListPanel = (ContactListPanel) contactListPanel;
 		this.contactInfoPanel = (ContactInfoPanel) contactInfoPanel;
+		this.buttonPanel = (ButtonPanel) buttonPanel;
 		this.infoButtonPanel = this.contactInfoPanel.getInfoButtonPanel();
 		this.connection = new JDBCConnection();
 	}
@@ -40,6 +43,9 @@ public class SelectionListener implements TreeSelectionListener {
 			if(!infoButtonPanel.getSaveChanges().isEnabled()){
 				infoButtonPanel.getSaveChanges().setEnabled(true);
 			}
+			if(!buttonPanel.getDelete().isEnabled()){
+				buttonPanel.getDelete().setEnabled(true);
+			}
 			ContactList contactList = connection.getContactList();
 			Contact contact = contactList.get(selectedIndex); //change to connection.get(index)
 			populateContactInfo(contact);
@@ -47,6 +53,9 @@ public class SelectionListener implements TreeSelectionListener {
 		else {
 			if(infoButtonPanel.getSaveChanges().isEnabled()){
 				infoButtonPanel.getSaveChanges().setEnabled(false);
+			}
+			if(buttonPanel.getDelete().isEnabled()){
+				buttonPanel.getDelete().setEnabled(false);
 			}
 			contactInfoPanel.clearFields();
 		}

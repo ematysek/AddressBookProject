@@ -40,6 +40,7 @@ public class ButtonPanel extends JPanel {
 		this.add(newGroup);
 
 		delete = new JButton("Delete");
+		delete.setEnabled(false);
 		delete.addActionListener(new DeleteActionListener(contactList));
 		this.add(delete);
 

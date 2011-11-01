@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Properties;
 
 import contacts.*;
@@ -122,6 +123,18 @@ public class JDBCConnection {
 		
 		return contacts;
 		
+	}
+	
+	public ArrayList<Contact> getAllContactsSorted() {
+		ArrayList<Contact> contacts = this.getAllContacts();
+		
+		Collections.sort(contacts);
+		
+		return contacts;
+	}
+	
+	public ContactList getSortedContactList() {
+		return new ContactList(this.getAllContactsSorted());
 	}
 	
 	/**
