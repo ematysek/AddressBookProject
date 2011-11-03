@@ -4,9 +4,11 @@ also look up how to close connections as program is exiting
 
 Documentation!
 
-Remove fieldValidator class
++Remove fieldValidator class
 
-Remove contains() from validator class
++Remove contains() from validator class
 
-Remove test class
+Validate phone numbers are length of 10
+
++Remove test class
 
