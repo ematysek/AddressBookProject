@@ -1,23 +1,26 @@
 package gui.listeners;
 
-import javax.swing.JPanel;
-import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import sql.JDBCConnection;
-import sql.MyConnection;
-
-import contacts.Contact;
-import contacts.ContactList;
-
 import gui.panels.ButtonPanel;
 import gui.panels.ContactListPanel;
 import gui.panels.contactinfo.ContactInfoPanel;
 import gui.panels.contactinfo.InfoButtonPanel;
-import gui.panels.contactinfo.PhoneNumberPanel;
 
+import javax.swing.JPanel;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+
+import sql.JDBCConnection;
+import sql.MyConnection;
+import contacts.Contact;
+import contacts.ContactList;
+
+/**
+ * An ActionListener that updates the displayed contact information and enables
+ * buttons based on which node is selected in the JTree
+ * 
+ * @author Eric Matysek
+ * 
+ */
 public class SelectionListener implements TreeSelectionListener {
 
 	private ButtonPanel buttonPanel;
@@ -26,13 +29,24 @@ public class SelectionListener implements TreeSelectionListener {
 	private InfoButtonPanel infoButtonPanel;
 	private JDBCConnection connection;
 
+	/**
+	 * Constructs a new selection listener which updates the gui based on which
+	 * node is selected.
+	 * 
+	 * @param contactListPanel
+	 *            a ContactListPanel
+	 * @param contactInfoPanel
+	 *            a ContactInfoPanel
+	 * @param buttonPanel
+	 *            a ButtonPanel
+	 */
 	public SelectionListener(JPanel contactListPanel, JPanel contactInfoPanel,
 			JPanel buttonPanel) {
 		this.contactListPanel = (ContactListPanel) contactListPanel;
 		this.contactInfoPanel = (ContactInfoPanel) contactInfoPanel;
 		this.buttonPanel = (ButtonPanel) buttonPanel;
 		this.infoButtonPanel = this.contactInfoPanel.getInfoButtonPanel();
-		//this.connection = new JDBCConnection();
+		// this.connection = new JDBCConnection();
 		this.connection = MyConnection.getConnection();
 	}
 
@@ -41,81 +55,29 @@ public class SelectionListener implements TreeSelectionListener {
 
 		int selectedIndex = contactListPanel.getSelectedIndex();
 		if (selectedIndex >= 0) {
-			// System.out.println(index);
-			if (!infoButtonPanel.getSaveChanges().isEnabled()) {
-				infoButtonPanel.getSaveChanges().setEnabled(true);
+			// change state of save changes button if valid node is selected
+			if (!infoButtonPanel.isSaveChangesEnabled()) {
+				infoButtonPanel.setSaveChangesEnabled(true);
 			}
+			// change state of delete button if valid node is selected
 			if (!buttonPanel.getDelete().isEnabled()) {
 				buttonPanel.getDelete().setEnabled(true);
 			}
+			// populate contactInfoPanel
 			ContactList contactList = connection.getSortedContactList();
-			Contact contact = contactList.get(selectedIndex); // change to
-			// connection.get(index)
-			populateContactInfo(contact);
+			Contact contact = contactList.get(selectedIndex);
+			contactInfoPanel.populateTextFields(contact);
 		} else {
-			if (infoButtonPanel.getSaveChanges().isEnabled()) {
-				infoButtonPanel.getSaveChanges().setEnabled(false);
+			if (infoButtonPanel.isSaveChangesEnabled()) {
+				infoButtonPanel.setSaveChangesEnabled(false);
 			}
 			if (buttonPanel.getDelete().isEnabled()) {
 				buttonPanel.getDelete().setEnabled(false);
 			}
+			// clear fields if root node is selected
 			contactInfoPanel.clearFields();
 		}
 
-	}
-
-	// should this method be in this class?
-	private void populateContactInfo(Contact contact) {
-		PhoneNumberPanel phoneNumberPanel = (PhoneNumberPanel) contactInfoPanel
-				.getPhoneNumberPanel();
-
-		// Information
-		String firstName = contact.getFirstName();
-		String lastName = contact.getLastName();
-		String address = contact.getAddress();
-		String city = contact.getCity();
-		String state = contact.getState();
-		String zip = contact.getZip();
-		// Phone numbers
-		String homePhone = contact.getHomePhone();
-		String homeAreaCode = "";
-		String homeThreeDigits = "";
-		String homeFourDigits = "";
-		if (homePhone != null) {
-			if(homePhone.length() == 10){
-				homeAreaCode = homePhone.substring(0, 3);
-				homeThreeDigits = homePhone.substring(3, 6);
-				homeFourDigits = homePhone.substring(6, 10);
-			}
-		}
-		String cellPhone = contact.getCellPhone();
-		String cellAreaCode = "";
-		String cellThreeDigits = "";
-		String cellFourDigits = "";
-		if(cellPhone != null){
-			if (cellPhone.length() == 10) {
-				cellAreaCode = cellPhone.substring(0, 3);
-				cellThreeDigits = cellPhone.substring(3, 6);
-				cellFourDigits = cellPhone.substring(6, 10);
-			}
-		}
-		// email
-		String email = contact.getEmail();
-
-		// Set text of text fields
-		contactInfoPanel.getTxtFirstName().setText(firstName);
-		contactInfoPanel.getTxtLastName().setText(lastName);
-		contactInfoPanel.getTxtAddress().setText(address);
-		contactInfoPanel.getTxtCity().setText(city);
-		contactInfoPanel.getTxtState().setText(state);
-		contactInfoPanel.getTxtZip().setText(zip);
-		phoneNumberPanel.getHomeAreaCode().setText(homeAreaCode);
-		phoneNumberPanel.getHomeThreeDigits().setText(homeThreeDigits);
-		phoneNumberPanel.getHomeFourDigits().setText(homeFourDigits);
-		phoneNumberPanel.getCellAreaCode().setText(cellAreaCode);
-		phoneNumberPanel.getCellThreeDigits().setText(cellThreeDigits);
-		phoneNumberPanel.getCellFourDigits().setText(cellFourDigits);
-		contactInfoPanel.getTxtEmail().setText(email);
 	}
 
 }

@@ -10,14 +10,13 @@ import javax.swing.JPanel;
 
 import sql.JDBCConnection;
 import sql.MyConnection;
-
 import contacts.Contact;
 import contacts.ContactList;
 
 /**
- * Create an action listener for a specific event.
+ * DeleteActionListener class creates an action listener for a specific event.
  * 
- * @author Eric Matysek
+ * @author Juan Ramirez, Eric Matysek
  * 
  */
 public class DeleteActionListener implements ActionListener {
@@ -25,9 +24,15 @@ public class DeleteActionListener implements ActionListener {
 	private ContactListPanel contactListPanel;
 	private JDBCConnection connection;
 
+	/**
+	 * Casts panels to access their information of the contact selected from
+	 * contactListpanel to delete it.
+	 * 
+	 * @param contactListPanel
+	 */
 	public DeleteActionListener(JPanel contactListPanel) {
 		this.contactListPanel = (ContactListPanel) contactListPanel;
-		//this.connection = new JDBCConnection();
+		// this.connection = new JDBCConnection();
 		this.connection = MyConnection.getConnection();
 	}
 
@@ -36,15 +41,16 @@ public class DeleteActionListener implements ActionListener {
 
 		ContactList contactList = contactListPanel.getContactList();
 		int index = contactListPanel.getSelectedIndex();
-		if(index >= 0){
+		if (index >= 0) {
 			Contact contact = contactList.get(index);
 			int contactID = Integer.parseInt(contact.getID());
 			connection.removeContact(contactID);
 			contactListPanel.nodeRemoved(index);
-			//contactListPanel.refreshList();
+			// contactListPanel.refreshList();
 		} else {
-			//TODO pop-up explaining no contact is selected.
-			JOptionPane.showMessageDialog(contactListPanel, "No contact was selected", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(contactListPanel,
+					"No contact was selected", "Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

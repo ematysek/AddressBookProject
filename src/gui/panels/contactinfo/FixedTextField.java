@@ -3,7 +3,6 @@ package gui.panels.contactinfo;
 import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
 /**
@@ -27,6 +26,11 @@ public class FixedTextField extends JTextField {
 
 }
 
+/**
+ * A PlainDocument with a fixed length.
+ * @author Eric Matysek
+ *
+ */
 class FixedPlainDocument extends PlainDocument {
 
 	private int maxLength;

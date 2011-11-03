@@ -2,16 +2,16 @@ package gui.panels;
 
 import gui.listeners.DeleteActionListener;
 import gui.listeners.NewContactActionListener;
-import gui.listeners.NewGroupActionListener;
 
 import java.awt.FlowLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 /**
- * A panel containing a button toolbox.
+ * A panel containing a buttons that create and delete contacts.
  * 
  * @author Eric Matysek
  * 
@@ -20,7 +20,7 @@ public class ButtonPanel extends JPanel {
 
 	// Buttons
 	private JButton newContact;
-	//private JButton newGroup; Removed
+	// private JButton newGroup; Removed
 	private JButton delete;
 	// Border
 	private Border border;
@@ -32,12 +32,9 @@ public class ButtonPanel extends JPanel {
 		this.setLayout(new FlowLayout());
 
 		newContact = new JButton("New Contact");
-		newContact.addActionListener(new NewContactActionListener(contactInfo, contactList));
+		newContact.addActionListener(new NewContactActionListener(contactInfo,
+				contactList));
 		this.add(newContact);
-
-		//newGroup = new JButton("New Group");
-		//newGroup.addActionListener(new NewGroupActionListener());
-		//this.add(newGroup);
 
 		delete = new JButton("Delete");
 		delete.setEnabled(false);
@@ -50,11 +47,13 @@ public class ButtonPanel extends JPanel {
 	}
 
 	/**
-	 * @return the delete
+	 * Returns the delete JButton
+	 * 
+	 * @return the delete JButton
 	 */
 	public JButton getDelete() {
+		// TODO Auto-generated method stub
 		return delete;
 	}
-
 
 }

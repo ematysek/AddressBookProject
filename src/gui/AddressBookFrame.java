@@ -1,5 +1,9 @@
 package gui;
 
+import gui.panels.ButtonPanel;
+import gui.panels.ContactListPanel;
+import gui.panels.contactinfo.ContactInfoPanel;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,12 +24,9 @@ import javax.swing.WindowConstants;
 
 import sql.MyConnection;
 
-import gui.ConstraintsFactory;
-import gui.panels.ButtonPanel;
-import gui.panels.contactinfo.ContactInfoPanel;
-import gui.panels.ContactListPanel;
-
 /**
+ * Frame displaying the application.
+ * 
  * @author Eric Matysek
  * 
  */
@@ -35,6 +36,21 @@ public class AddressBookFrame extends JFrame {
 	// Class-Level Variables / GUI Components
 	// **************************************
 
+	/**
+	 * Listener class that describes what to do when the application is closing.
+	 * 
+	 * @author Eric Matysek
+	 * 
+	 */
+	private class ExitItemListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			exit();
+		}
+
+	}
+
 	// Panels
 	private JPanel buttonPanel;
 	private JPanel contactInfoPanel;
@@ -42,15 +58,13 @@ public class AddressBookFrame extends JFrame {
 	// Menu Bar
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
-	private JMenu editMenu;
 	private JMenuItem exitItem;
-	private JMenuItem clearItem;
+
 	// Insets
 	private Insets insets;
 
 	public AddressBookFrame() {
 		this.setTitle("Address Book");
-		// this.setSize(800, 600);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
@@ -65,20 +79,14 @@ public class AddressBookFrame extends JFrame {
 
 		// Declare and set menu bar
 		menuBar = new JMenuBar();
-		
+
 		fileMenu = new JMenu("File");
 		exitItem = new JMenuItem("Exit");
 		exitItem.addActionListener(new ExitItemListener());
 		fileMenu.add(exitItem);
-		
-		//editMenu = new JMenu("Edit");
-		//clearItem = new JMenuItem("Clear Fields");
-		//editMenu.add(clearItem);
-		
-		menuBar.add(fileMenu);
-		//menuBar.add(editMenu);
-		this.setJMenuBar(menuBar);
 
+		menuBar.add(fileMenu);
+		this.setJMenuBar(menuBar);
 
 		// Declare and add contact info panel
 		contactInfoPanel = new ContactInfoPanel();
@@ -89,15 +97,16 @@ public class AddressBookFrame extends JFrame {
 		contactListPanel = new ContactListPanel(contactInfoPanel);
 		this.add(contactListPanel, ConstraintsFactory.getConstraints(0, 0, 1,
 				3, GridBagConstraints.NORTHWEST, insets));
-		
+
 		// Pass contactListPanel to the contactInfoPanel
-		((ContactInfoPanel) contactInfoPanel).setContactListPanel(contactListPanel);
-		
+		((ContactInfoPanel) contactInfoPanel)
+				.setContactListPanel(contactListPanel);
+
 		// Declare and add button panel
 		buttonPanel = new ButtonPanel(contactInfoPanel, contactListPanel);
 		this.add(buttonPanel, ConstraintsFactory.getConstraints(1, 0, 1, 1,
 				GridBagConstraints.CENTER, insets));
-		
+
 		// pass buttonPanel to contactListPanel
 		((ContactListPanel) contactListPanel).setButtonPanel(buttonPanel);
 
@@ -106,7 +115,10 @@ public class AddressBookFrame extends JFrame {
 	}
 
 	/**
-	 * @param window Window to center.
+	 * Centers the provided window.
+	 * 
+	 * @param window
+	 *            Window to center.
 	 */
 	private void centerWindow(Window window) {
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -114,18 +126,12 @@ public class AddressBookFrame extends JFrame {
 		setLocation((d.width - window.getWidth()) / 2,
 				(d.height - window.getHeight()) / 2);
 	}
-	
+
+	/**
+	 * Closes the JDBCConnection and exits the application.
+	 */
 	public void exit() {
 		MyConnection.close();
-		System.exit(0);	
-	}
-	
-	private class ExitItemListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			exit();
-		}
-		
+		System.exit(0);
 	}
 }

@@ -1,5 +1,7 @@
 package gui.panels.contactinfo;
 
+import gui.ConstraintsFactory;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -8,9 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import gui.ConstraintsFactory;
-
 /**
+ * Panel containing text boxes for home and cell phone numbers.
+ * 
  * @author Eric Matysek
  * 
  */
@@ -28,10 +30,10 @@ public class PhoneNumberPanel extends JPanel {
 	private JTextField cellAreaCode;
 	private JTextField cellThreeDigits;
 	private JTextField cellFourDigits;
-	//Phone Numbers
-	private String homePhone;
-	private String cellPhone;
 
+	/**
+	 * Constructs a new phone number panel with home and cell phone numbers.
+	 */
 	public PhoneNumberPanel() {
 		this.setLayout(new GridBagLayout());
 
@@ -90,8 +92,11 @@ public class PhoneNumberPanel extends JPanel {
 		this.add(cellFourDigits, ConstraintsFactory.getConstraints(5, 1, 1, 1,
 				GridBagConstraints.CENTER, insets));
 	}
-	
-	public void clearFields(){
+
+	/**
+	 * Clears all text boxes within this panel
+	 */
+	public void clearFields() {
 		homeAreaCode.setText("");
 		homeThreeDigits.setText("");
 		homeFourDigits.setText("");
@@ -101,6 +106,8 @@ public class PhoneNumberPanel extends JPanel {
 	}
 
 	/**
+	 * Returns the area code of the home number
+	 * 
 	 * @return the homeAreaCode
 	 */
 	public JTextField getHomeAreaCode() {
@@ -108,6 +115,8 @@ public class PhoneNumberPanel extends JPanel {
 	}
 
 	/**
+	 * Returns the middle three digits of the home number
+	 * 
 	 * @return the homeThreeDigits
 	 */
 	public JTextField getHomeThreeDigits() {
@@ -115,6 +124,8 @@ public class PhoneNumberPanel extends JPanel {
 	}
 
 	/**
+	 * Returns the last for digits of the home number
+	 * 
 	 * @return the homeFourDigits
 	 */
 	public JTextField getHomeFourDigits() {
@@ -122,6 +133,8 @@ public class PhoneNumberPanel extends JPanel {
 	}
 
 	/**
+	 * Returns the area code of the cell number
+	 * 
 	 * @return the cellAreaCode
 	 */
 	public JTextField getCellAreaCode() {
@@ -129,6 +142,8 @@ public class PhoneNumberPanel extends JPanel {
 	}
 
 	/**
+	 * Returns the middle three digits of the cell number
+	 * 
 	 * @return the cellThreeDigits
 	 */
 	public JTextField getCellThreeDigits() {
@@ -136,17 +151,31 @@ public class PhoneNumberPanel extends JPanel {
 	}
 
 	/**
+	 * Returns the last four digits of the cell number
+	 * 
 	 * @return the cellFourDigits
 	 */
 	public JTextField getCellFourDigits() {
 		return cellFourDigits;
 	}
-	
-	public String getHomePhone(){
-	return (homeAreaCode.getText() + homeThreeDigits.getText() + homeFourDigits.getText());
+
+	/**
+	 * Returns the home phone number
+	 * 
+	 * @return The home phone number by appending each group of digits
+	 */
+	public String getHomePhone() {
+		return (homeAreaCode.getText() + homeThreeDigits.getText() + homeFourDigits
+				.getText());
 	}
-	
-	public String getCellPhone(){
-	return (cellAreaCode.getText() + cellThreeDigits.getText() + cellFourDigits.getText());
+
+	/**
+	 * Returns the cell phone number
+	 * 
+	 * @return The cell phone number by appending each group of digits
+	 */
+	public String getCellPhone() {
+		return (cellAreaCode.getText() + cellThreeDigits.getText() + cellFourDigits
+				.getText());
 	}
 }

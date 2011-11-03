@@ -1,11 +1,14 @@
 package gui;
 
-import javax.swing.JPanel;
-
 import gui.panels.contactinfo.ContactInfoPanel;
 import gui.panels.contactinfo.PhoneNumberPanel;
 
+import javax.swing.JPanel;
+
 /**
+ * Validator class validates all of the input from the user to makes sure
+ * everything is in order to then store the contact onto the database
+ * 
  * @author Juan Ramirez
  * 
  */
@@ -15,8 +18,13 @@ public class Validator {
 	private ContactInfoPanel contactInfo;
 	private PhoneNumberPanel phoneNumberPanel;
 
-	public Validator(JPanel contactInfoPnl) {
-		this.contactInfo = (ContactInfoPanel) contactInfoPnl;
+	/**
+	 * Constructs a new Validator to validate text fields
+	 * 
+	 * @param contactInfoPanel
+	 */
+	public Validator(JPanel contactInfoPanel) {
+		this.contactInfo = (ContactInfoPanel) contactInfoPanel;
 		this.phoneNumberPanel = (PhoneNumberPanel) contactInfo
 				.getPhoneNumberPanel();
 	}// end validator
@@ -90,7 +98,7 @@ public class Validator {
 		if (!strZip.equals("")) {
 			// Checks zip code
 			try {
-				int zipCode = Integer.parseInt(strZip);
+				Integer.parseInt(strZip);
 			}
 
 			catch (NumberFormatException nfe) {

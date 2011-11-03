@@ -2,25 +2,21 @@ package gui.panels;
 
 import gui.listeners.SelectionListener;
 
-import java.awt.Component;
 import java.awt.Dimension;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 import sql.JDBCConnection;
 import sql.MyConnection;
-
-import contacts.*;
+import contacts.Contact;
+import contacts.ContactList;
 
 /**
  * Panel containing the contact list JTree.
@@ -49,7 +45,6 @@ public class ContactListPanel extends JPanel {
 	private JDBCConnection connection;
 	// Panel
 	private JPanel contactInfoPanel;
-	private JPanel buttonPanel;
 	// Icons
 	private ImageIcon contactBookIcon;
 	private ImageIcon contactIcon;
@@ -75,7 +70,7 @@ public class ContactListPanel extends JPanel {
 		// Declare Icon Images
 		contactIcon = new ImageIcon("resources/ContactIcon1.jpg");
 		contactBookIcon = new ImageIcon("resources/contactbookicon.jpg");
-		
+
 		// get tree cell renderer from contacttree and set icons
 		DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) contactTree
 				.getCellRenderer();
@@ -96,6 +91,21 @@ public class ContactListPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the ContactList from this panel
+	 * 
+	 * @return the contactList
+	 */
+	public ContactList getContactList() {
+		return contactList;
+	}
+
+	/**
+	 * Returns the index of the currenly selected node, or -2 if no node is
+	 * selected
+	 * 
+	 * @return the index of the selected node
+	 */
 	public int getSelectedIndex() {
 		DefaultMutableTreeNode tempNode = (DefaultMutableTreeNode) contactTree
 				.getLastSelectedPathComponent();
@@ -108,40 +118,9 @@ public class ContactListPanel extends JPanel {
 	}
 
 	/**
-	 * @return the contactTree
+	 * Initialize the tree nodes from the database
 	 */
-	public JTree getContactTree() {
-		return contactTree;
-	}
-
-	/**
-	 * @return the rootNode
-	 */
-	public DefaultMutableTreeNode getRootNode() {
-		return rootNode;
-	}
-
-	/**
-	 * @return the contactList
-	 */
-	public ContactList getContactList() {
-		return contactList;
-	}
-
-	/**
-	 * Set the button panel here and pass it to the selection listener in the
-	 * contact tree
-	 * 
-	 * @param buttonPanel
-	 *            the buttonPanel to set
-	 */
-	public void setButtonPanel(JPanel buttonPanel) {
-		this.buttonPanel = buttonPanel;
-		contactTree.addTreeSelectionListener(new SelectionListener(this,
-				contactInfoPanel, buttonPanel));
-	}
-
-	public void initializeTree() {
+	private void initializeTree() {
 		this.contactList = connection.getSortedContactList();
 		System.out.println("called");
 		for (int i = contactList.size() - 1; i >= 0; i--) {
@@ -152,6 +131,11 @@ public class ContactListPanel extends JPanel {
 
 	}
 
+	/**
+	 * Notifies the JTree that a node needs to be added because the database has
+	 * been updated. This method retrieves the new contact list and compares it
+	 * to the old contact list until a discrepancy is found.
+	 */
 	public void nodeAdded() {
 		// find the index of the added node by comparing contact ID's
 		ContactList newList = connection.getSortedContactList();
@@ -176,16 +160,13 @@ public class ContactListPanel extends JPanel {
 
 	}
 
-	public void nodeRemoved(int index) {
-		System.out.println(index);
-		// remove contact from list
-		this.contactList.remove(index);
-		// remove node from tree
-		DefaultMutableTreeNode nodeToRemove = (DefaultMutableTreeNode) contactTree
-				.getPathForRow(index + 1).getLastPathComponent();
-		treeModel.removeNodeFromParent(nodeToRemove);
-	}
-
+	/**
+	 * Notifies the JTree to update the changed node if the first or last name
+	 * has been changed on the corresponding Contact
+	 * 
+	 * @param selectedIndex
+	 *            the index of the changed node
+	 */
 	public void nodeChanged(int selectedIndex) {
 
 		// get an updated contactlist to compare old contactlist to
@@ -211,19 +192,33 @@ public class ContactListPanel extends JPanel {
 
 	}
 
-	private class IconRenderer implements TreeCellRenderer {
+	/**
+	 * Notifies the JTree to remove a node because it has been deleted from the
+	 * database
+	 * 
+	 * @param index
+	 *            the index of the node to be deleted
+	 */
+	public void nodeRemoved(int index) {
+		System.out.println(index);
+		// remove contact from list
+		this.contactList.remove(index);
+		// remove node from tree
+		DefaultMutableTreeNode nodeToRemove = (DefaultMutableTreeNode) contactTree
+				.getPathForRow(index + 1).getLastPathComponent();
+		treeModel.removeNodeFromParent(nodeToRemove);
+	}
 
-		@Override
-		public Component getTreeCellRendererComponent(JTree arg0, Object value,
-				boolean arg2, boolean arg3, boolean arg4, int arg5, boolean arg6) {
-
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-
-			// this.setIcon();
-
-			return null;
-		}
-
+	/**
+	 * Set the button panel here and pass it to the contactTree selection
+	 * listener
+	 * 
+	 * @param buttonPanel
+	 *            the buttonPanel to set
+	 */
+	public void setButtonPanel(JPanel buttonPanel) {
+		contactTree.addTreeSelectionListener(new SelectionListener(this,
+				contactInfoPanel, buttonPanel));
 	}
 
 }

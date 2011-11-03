@@ -149,7 +149,7 @@ public class JDBCConnection {
 	/**
 	 * adds Contact object to contact table
 	 * 
-	 * @param Contact object
+	 * @param contact object
 	 */
 	public void addContact(Contact contact) {
 
@@ -169,7 +169,7 @@ public class JDBCConnection {
 	/**
 	 * removes entry designated by id from contact table
 	 * 
-	 * @param int id
+	 * @param id id
 	 */
 	public void removeContact(int id) {
 		
@@ -186,7 +186,7 @@ public class JDBCConnection {
 	/**
 	 * updates contact table entry for Contact
 	 * 
-	 * @param Contact object
+	 * @param contact object
 	 */
 	public void updateContact(Contact contact) {
 		
@@ -203,8 +203,9 @@ public class JDBCConnection {
 	}
 	
 	/**
-	 * @param id
-	 * @return
+	 * Gets the Contact from the database with the supplied ID.
+	 * @param id ID of the contact to return
+	 * @return the contact with the supplied ID
 	 */
 	public Contact getContact(int id) {
 		Statement statement = null;

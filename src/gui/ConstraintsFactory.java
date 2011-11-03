@@ -36,15 +36,15 @@ public class ConstraintsFactory {
 	
 	/**
 	 * Get GridBagConstraints using provided fields including weights.
-	 * @param gridx
-	 * @param gridy
-	 * @param gridwidth
-	 * @param gridheight
-	 * @param weightx
-	 * @param weighty
-	 * @param anchor
-	 * @param insets
-	 * @return
+	 * @param gridx Specifies the column for the component.
+	 * @param gridy Specifies the row for the component.
+	 * @param gridwidth gridwidth Specifies the number of columns the component will occupy.
+	 * @param gridheight gridheight Specifies the number of rows the component will occupy.
+	 * @param weightx Specifies how to distribute extra horizontal space.
+	 * @param weighty Specifies how to distribute extra vertical space.
+	 * @param anchor Specifies where to place the component within the display area.
+	 * @param insets insets Specifies the external padding of the component.
+	 * @return GridBagConstraints object with specified fields.
 	 */
 	public static GridBagConstraints getConstraints(int gridx, int gridy,
 			int gridwidth, int gridheight, int weightx, int weighty, int anchor, Insets insets) {

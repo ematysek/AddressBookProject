@@ -1,12 +1,12 @@
 package contacts;
 
 /**
+ * A contact object containing information about the contact
+ * 
  * @author Eric Matysek
  * 
  */
-public class Contact implements Comparable {
-
-	// TODO DOCUMENTATION!!!
+public class Contact implements Comparable<Contact> {
 
 	private String ID;
 	private String firstName;
@@ -20,7 +20,11 @@ public class Contact implements Comparable {
 	private String email;
 
 	/**
+	 * Constructs a new Contact from the provided fields. ID in most cases will
+	 * not be necessary as this value is set by the database.
+	 * 
 	 * @param ID
+	 *            id of the contact
 	 * @param firstName
 	 *            first name
 	 * @param lastName
@@ -55,48 +59,56 @@ public class Contact implements Comparable {
 		this.email = email;
 	}
 
+	@Override
+	public int compareTo(Contact c) {
+		return this.lastName.compareToIgnoreCase(c.lastName);
+	}
+
 	/**
-	 * @return the iD
+	 * Compares two Contact objects based on their information including ID.
+	 * 
+	 * @param contact
+	 *            contact to compare to
+	 * @return false if any field is different, true otherwise.
 	 */
-	public String getID() {
-		return ID;
-	}
+	public boolean equals(Contact contact) {
+		if (!ID.equals(contact.getID())) {
+			return false;
+		}
+		if (!firstName.equals(contact.getFirstName())) {
+			return false;
+		}
+		if (!lastName.equals(contact.getLastName())) {
+			return false;
+		}
+		if (!address.equals(contact.getAddress())) {
+			return false;
+		}
+		if (!city.equals(contact.getCity())) {
+			return false;
+		}
+		if (!state.equals(contact.getState())) {
+			return false;
+		}
+		if (!zip.equals(contact.getZip())) {
+			return false;
+		}
+		if (!homePhone.equals(contact.getHomePhone())) {
+			return false;
+		}
+		if (!cellPhone.equals(contact.getCellPhone())) {
+			return false;
+		}
+		if (!email.equals(contact.getEmail())) {
+			return false;
+		}
 
-	public void setID(String iD) {
-		ID = iD;
-	}
-
-	/**
-	 * @return the firstName
-	 */
-	public String getFirstName() {
-		return firstName;
-	}
-
-	/**
-	 * @param firstName
-	 *            the firstName to set
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	/**
-	 * @return the lastName
-	 */
-	public String getLastName() {
-		return lastName;
-	}
-
-	/**
-	 * @param lastName
-	 *            the lastName to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		return true;
 	}
 
 	/**
+	 * Returns the address of the contact.
+	 * 
 	 * @return the address
 	 */
 	public String getAddress() {
@@ -104,74 +116,8 @@ public class Contact implements Comparable {
 	}
 
 	/**
-	 * @param address
-	 *            the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	/**
-	 * @return the city
-	 */
-	public String getCity() {
-		return city;
-	}
-
-	/**
-	 * @param city
-	 *            the city to set
-	 */
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	/**
-	 * @return the state
-	 */
-	public String getState() {
-		return state;
-	}
-
-	/**
-	 * @param state
-	 *            the state to set
-	 */
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	/**
-	 * @return the zip
-	 */
-	public String getZip() {
-		return zip;
-	}
-
-	/**
-	 * @param zip
-	 *            the zip to set
-	 */
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
-
-	/**
-	 * @return the homePhone
-	 */
-	public String getHomePhone() {
-		return homePhone;
-	}
-
-	/**
-	 * @param homePhone
-	 *            the homePhone to set
-	 */
-	public void setHomePhone(String homePhone) {
-		this.homePhone = homePhone;
-	}
-
-	/**
+	 * Returns the cell phone number of the contact.
+	 * 
 	 * @return the cellPhone
 	 */
 	public String getCellPhone() {
@@ -179,14 +125,17 @@ public class Contact implements Comparable {
 	}
 
 	/**
-	 * @param cellPhone
-	 *            the cellPhone to set
+	 * Returns the city of the contact.
+	 * 
+	 * @return the city
 	 */
-	public void setCellPhone(String cellPhone) {
-		this.cellPhone = cellPhone;
+	public String getCity() {
+		return city;
 	}
 
 	/**
+	 * Returns the email of the contact.
+	 * 
 	 * @return the email
 	 */
 	public String getEmail() {
@@ -194,13 +143,48 @@ public class Contact implements Comparable {
 	}
 
 	/**
-	 * @param email
-	 *            the email to set
+	 * Returns the first name of the contact.
+	 * 
+	 * @return the firstName
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public String getFirstName() {
+		return firstName;
 	}
 
+	/**
+	 * Returns the home phone number of the contact.
+	 * 
+	 * @return the homePhone
+	 */
+	public String getHomePhone() {
+		return homePhone;
+	}
+
+	/**
+	 * Returns the ID of the contact.
+	 * 
+	 * @return the iD
+	 */
+	public String getID() {
+		return ID;
+	}
+
+	/**
+	 * Returns the last name of the contact.
+	 * 
+	 * @return the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * Returns a string formatted for the JTree in lastname, firstname format.
+	 * If no last name is supplied for the contact then only the first name is
+	 * returned.
+	 * 
+	 * @return a string in lastname, firstname format
+	 */
 	public String getNodeString() {
 		String nodeString;
 		if (this.lastName.equals("")) {
@@ -211,50 +195,126 @@ public class Contact implements Comparable {
 		return nodeString;
 	}
 
+	/**
+	 * Returns the state of the contact.
+	 * 
+	 * @return the state
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * Returns the zip of the contact.
+	 * 
+	 * @return the zip
+	 */
+	public String getZip() {
+		return zip;
+	}
+
+	/**
+	 * Sets the address of the contact.
+	 * 
+	 * @param address
+	 *            the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	/**
+	 * Sets the cell phone number of the contact.
+	 * 
+	 * @param cellPhone
+	 *            the cellPhone to set
+	 */
+	public void setCellPhone(String cellPhone) {
+		this.cellPhone = cellPhone;
+	}
+
+	/**
+	 * Sets the city of the contact.
+	 * 
+	 * @param city
+	 *            the city to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	/**
+	 * Sets the email of the contact.
+	 * 
+	 * @param email
+	 *            the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * Sets the first name of the contact.
+	 * 
+	 * @param firstName
+	 *            the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * Sets the home phone number of the contact.
+	 * 
+	 * @param homePhone
+	 *            the homePhone to set
+	 */
+	public void setHomePhone(String homePhone) {
+		this.homePhone = homePhone;
+	}
+
+	/**
+	 * Sets the ID of the contact.
+	 * 
+	 * @param iD
+	 */
+	public void setID(String iD) {
+		ID = iD;
+	}
+
+	/**
+	 * Sets the last name of the contact.
+	 * 
+	 * @param lastName
+	 *            the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	/**
+	 * Sets the state of the contact.
+	 * 
+	 * @param state
+	 *            the state to set
+	 */
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	/**
+	 * Sets the zip of the contact.
+	 * 
+	 * @param zip
+	 *            the zip to set
+	 */
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
 	@Override
 	public String toString() {
 		return (this.firstName + " " + this.lastName);
-	}
-
-	@Override
-	public int compareTo(Object obj) {
-		Contact c = (Contact) obj;
-		return this.lastName.compareToIgnoreCase(c.lastName);
-	}
-
-	public boolean equals(Contact c) {
-		if (!ID.equals(c.getID())) {
-			return false;
-		}
-		if (!firstName.equals(c.getFirstName())) {
-			return false;
-		}
-		if (!lastName.equals(c.getLastName())) {
-			return false;
-		}
-		if (!address.equals(c.getAddress())) {
-			return false;
-		}
-		if (!city.equals(c.getCity())) {
-			return false;
-		}
-		if (!state.equals(c.getState())) {
-			return false;
-		}
-		if (!zip.equals(c.getZip())) {
-			return false;
-		}
-		if (!homePhone.equals(c.getHomePhone())) {
-			return false;
-		}
-		if (!cellPhone.equals(c.getCellPhone())) {
-			return false;
-		}
-		if (!email.equals(c.getEmail())) {
-			return false;
-		}
-
-		return true;
 	}
 
 }
