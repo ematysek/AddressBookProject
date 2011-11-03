@@ -7,3 +7,6 @@ Documentation!
 Remove fieldValidator class
 
 Remove contains() from validator class
+
+Remove test class
+
