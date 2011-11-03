@@ -6,12 +6,19 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+
+import sql.MyConnection;
 
 import gui.ConstraintsFactory;
 import gui.panels.ButtonPanel;
@@ -36,6 +43,8 @@ public class AddressBookFrame extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
 	private JMenu editMenu;
+	private JMenuItem exitItem;
+	private JMenuItem clearItem;
 	// Insets
 	private Insets insets;
 
@@ -43,7 +52,12 @@ public class AddressBookFrame extends JFrame {
 		this.setTitle("Address Book");
 		// this.setSize(800, 600);
 		this.setResizable(false);
-		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				exit();
+			}
+		});
 		this.setLayout(new GridBagLayout());
 
 		// Declare default insets
@@ -51,10 +65,18 @@ public class AddressBookFrame extends JFrame {
 
 		// Declare and set menu bar
 		menuBar = new JMenuBar();
+		
 		fileMenu = new JMenu("File");
-		editMenu = new JMenu("Edit");
+		exitItem = new JMenuItem("Exit");
+		exitItem.addActionListener(new ExitItemListener());
+		fileMenu.add(exitItem);
+		
+		//editMenu = new JMenu("Edit");
+		//clearItem = new JMenuItem("Clear Fields");
+		//editMenu.add(clearItem);
+		
 		menuBar.add(fileMenu);
-		menuBar.add(editMenu);
+		//menuBar.add(editMenu);
 		this.setJMenuBar(menuBar);
 
 
@@ -91,5 +113,19 @@ public class AddressBookFrame extends JFrame {
 		Dimension d = tk.getScreenSize();
 		setLocation((d.width - window.getWidth()) / 2,
 				(d.height - window.getHeight()) / 2);
+	}
+	
+	public void exit() {
+		MyConnection.close();
+		System.exit(0);	
+	}
+	
+	private class ExitItemListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			exit();
+		}
+		
 	}
 }

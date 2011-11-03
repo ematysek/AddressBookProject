@@ -147,6 +147,6 @@ public class PhoneNumberPanel extends JPanel {
 	}
 	
 	public String getCellPhone(){
-	return (cellAreaCode.getText() + cellThreeDigits.getText() + homeFourDigits.getText());
+	return (cellAreaCode.getText() + cellThreeDigits.getText() + cellFourDigits.getText());
 	}
 }

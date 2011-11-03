@@ -1,6 +1,6 @@
-Still need to add File and Edit menu buttons.
++Still need to add File and Edit menu buttons.
 
-also look up how to close connections as program is exiting
++also look up how to close connections as program is exiting
 
 Documentation!
 
@@ -8,7 +8,7 @@ Documentation!
 
 +Remove contains() from validator class
 
-Validate phone numbers are length of 10
++Validate phone numbers are length of 10
 
 +Remove test class
 

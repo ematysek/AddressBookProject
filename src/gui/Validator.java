@@ -54,28 +54,35 @@ public class Validator {
 
 		String strHomeNumber = phoneNumberPanel.getHomePhone();
 		if (!strHomeNumber.equals("")) {
-			// Checks Home Phone number Errors
-			try {
-				// Checks the phone number
-				long homePhoneNumber = Long.parseLong(strHomeNumber);
-			} catch (NumberFormatException nfe) {
-				// Error message
-				errorMessage += "Error at Home Phone Number\n";
+			if (strHomeNumber.length() == 10) {
+				// Checks Home Phone number Errors
+				try {
+					// Checks the phone number
+					Long.parseLong(strHomeNumber);
+				} catch (NumberFormatException nfe) {
+					// Error message
+					errorMessage += "Error at Home Phone Number\n";
+				}
+			} else {
+				errorMessage += "Please enter a 10-digit home phone number\n";
 			}
 		}
 
 		String strCellNumber = phoneNumberPanel.getCellPhone();
-		System.out.println(strCellNumber);
 		if (!strCellNumber.equals("")) {
-			// Checks for Cell Phone number errors
-			try {
-				// Checks the phone number
-				long cellPhoneNumber = Long.parseLong(strCellNumber);
-			}
+			if (strCellNumber.length() != 10) {
+				// Checks for Cell Phone number errors
+				try {
+					// Checks the phone number
+					Long.parseLong(strCellNumber);
+				}
 
-			catch (NumberFormatException nfe) {
-				// Error message
-				errorMessage += "Error at Cell Phone Number\n";
+				catch (NumberFormatException nfe) {
+					// Error message
+					errorMessage += "Error at Cell Phone Number\n";
+				}
+			} else {
+				errorMessage += "Please enter a 10-digit cell phone number";
 			}
 		}
 
@@ -88,7 +95,7 @@ public class Validator {
 
 			catch (NumberFormatException nfe) {
 				// Error Message
-				errorMessage += "Error at ZIP Code";
+				errorMessage += "Error at ZIP Code\n";
 			}
 		}
 
@@ -102,11 +109,6 @@ public class Validator {
 		}
 
 		return errorMessage;
-	}
-
-	private boolean contains(String atSymbol, String dotSymbol) {
-		// TODO Auto-generated method stub
-		return true;
 	}
 
 }

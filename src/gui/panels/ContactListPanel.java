@@ -2,12 +2,19 @@ package gui.panels;
 
 import gui.listeners.SelectionListener;
 
+import java.awt.Component;
 import java.awt.Dimension;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 import sql.JDBCConnection;
@@ -43,6 +50,9 @@ public class ContactListPanel extends JPanel {
 	// Panel
 	private JPanel contactInfoPanel;
 	private JPanel buttonPanel;
+	// Icons
+	private ImageIcon contactBookIcon;
+	private ImageIcon contactIcon;
 
 	/**
 	 * Constructs a new contact list panel containing a JTree.
@@ -62,6 +72,17 @@ public class ContactListPanel extends JPanel {
 		contactTree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
 
+		// Declare Icon Images
+		contactIcon = new ImageIcon("resources/ContactIcon1.jpg");
+		contactBookIcon = new ImageIcon("resources/contactbookicon.jpg");
+		
+		// get tree cell renderer from contacttree and set icons
+		DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) contactTree
+				.getCellRenderer();
+		renderer.setLeafIcon(contactIcon);
+		renderer.setClosedIcon(contactBookIcon);
+		renderer.setOpenIcon(contactBookIcon);
+
 		this.initializeTree();
 
 		this.scrollPane = new JScrollPane(contactTree);
@@ -72,6 +93,7 @@ public class ContactListPanel extends JPanel {
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.add(scrollPane);
 		// this.add(contactTree);
+
 	}
 
 	public int getSelectedIndex() {
@@ -127,7 +149,7 @@ public class ContactListPanel extends JPanel {
 			treeModel.insertNodeInto(
 					new DefaultMutableTreeNode(c.getNodeString()), rootNode, 0);
 		}
-		
+
 	}
 
 	public void nodeAdded() {
@@ -153,36 +175,55 @@ public class ContactListPanel extends JPanel {
 		this.contactList = connection.getSortedContactList();
 
 	}
-	
+
 	public void nodeRemoved(int index) {
 		System.out.println(index);
-		//remove contact from list
+		// remove contact from list
 		this.contactList.remove(index);
-		//remove node from tree
-		DefaultMutableTreeNode nodeToRemove = (DefaultMutableTreeNode) contactTree.getPathForRow(index+1).getLastPathComponent();
+		// remove node from tree
+		DefaultMutableTreeNode nodeToRemove = (DefaultMutableTreeNode) contactTree
+				.getPathForRow(index + 1).getLastPathComponent();
 		treeModel.removeNodeFromParent(nodeToRemove);
 	}
-	
+
 	public void nodeChanged(int selectedIndex) {
 
-		//get an updated contactlist to compare old contactlist to
+		// get an updated contactlist to compare old contactlist to
 		ContactList newList = connection.getSortedContactList();
-		
-		//update jtree node at selected index
-		DefaultMutableTreeNode node = (DefaultMutableTreeNode) contactTree.getPathForRow(selectedIndex+1).getLastPathComponent();
+
+		// update jtree node at selected index
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) contactTree
+				.getPathForRow(selectedIndex + 1).getLastPathComponent();
 		String contactString = newList.get(selectedIndex).getNodeString();
 		System.out.println(contactString);
-		if(!node.toString().equals(contactString)){
+		if (!node.toString().equals(contactString)) {
 			System.out.println("not equal");
-			DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(contactString);
+			DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(
+					contactString);
 			treeModel.removeNodeFromParent(node);
 			treeModel.insertNodeInto(newNode, rootNode, selectedIndex);
-			contactTree.setSelectionPath(contactTree.getPathForRow(selectedIndex+1));
+			contactTree.setSelectionPath(contactTree
+					.getPathForRow(selectedIndex + 1));
 		}
-		
-		//update contactList with changes
+
+		// update contactList with changes
 		this.contactList = connection.getSortedContactList();
-		
+
+	}
+
+	private class IconRenderer implements TreeCellRenderer {
+
+		@Override
+		public Component getTreeCellRendererComponent(JTree arg0, Object value,
+				boolean arg2, boolean arg3, boolean arg4, int arg5, boolean arg6) {
+
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+
+			// this.setIcon();
+
+			return null;
+		}
+
 	}
 
 }
