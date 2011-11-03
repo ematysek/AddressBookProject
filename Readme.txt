@@ -12,3 +12,4 @@ Validate phone numbers are length of 10
 
 +Remove test class
 
+Add sort method to ContactList.java
