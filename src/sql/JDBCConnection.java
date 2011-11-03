@@ -114,7 +114,7 @@ public class JDBCConnection {
 				Contact temp = new Contact(Integer.toString((rs.getInt("id"))), rs.getString("firstname"), rs.getString("lastname"), rs.getString("address"), rs.getString("city"),
 											rs.getString("state"), rs.getString("zip"), rs.getString("homephone"), rs.getString("cellphone"), rs.getString("email"));
 				if (contacts.add(temp)) {
-					System.out.println("successfully loaded " + temp.getFirstName() + " into contact array");
+					//System.out.println("successfully loaded " + temp.getFirstName() + " into contact array");
 				}
 			}
 		} catch (SQLException e) {

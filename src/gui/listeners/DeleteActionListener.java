@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import sql.JDBCConnection;
+import sql.MyConnection;
 
 import contacts.Contact;
 import contacts.ContactList;
@@ -26,7 +27,8 @@ public class DeleteActionListener implements ActionListener {
 
 	public DeleteActionListener(JPanel contactListPanel) {
 		this.contactListPanel = (ContactListPanel) contactListPanel;
-		this.connection = new JDBCConnection();
+		//this.connection = new JDBCConnection();
+		this.connection = MyConnection.getConnection();
 	}
 
 	@Override
@@ -38,6 +40,8 @@ public class DeleteActionListener implements ActionListener {
 			Contact contact = contactList.get(index);
 			int contactID = Integer.parseInt(contact.getID());
 			connection.removeContact(contactID);
+			contactListPanel.nodeRemoved(index);
+			//contactListPanel.refreshList();
 		} else {
 			//TODO pop-up explaining no contact is selected.
 			JOptionPane.showMessageDialog(contactListPanel, "No contact was selected", "Error", JOptionPane.ERROR_MESSAGE);

@@ -20,7 +20,7 @@ public class ButtonPanel extends JPanel {
 
 	// Buttons
 	private JButton newContact;
-	private JButton newGroup;
+	//private JButton newGroup; Removed
 	private JButton delete;
 	// Border
 	private Border border;
@@ -35,9 +35,9 @@ public class ButtonPanel extends JPanel {
 		newContact.addActionListener(new NewContactActionListener(contactInfo, contactList));
 		this.add(newContact);
 
-		newGroup = new JButton("New Group");
-		newGroup.addActionListener(new NewGroupActionListener());
-		this.add(newGroup);
+		//newGroup = new JButton("New Group");
+		//newGroup.addActionListener(new NewGroupActionListener());
+		//this.add(newGroup);
 
 		delete = new JButton("Delete");
 		delete.setEnabled(false);

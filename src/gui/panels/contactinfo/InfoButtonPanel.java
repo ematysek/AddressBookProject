@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import contacts.Contact;
 
 import sql.JDBCConnection;
+import sql.MyConnection;
 
 public class InfoButtonPanel extends JPanel implements ActionListener {
 
@@ -34,7 +35,8 @@ public class InfoButtonPanel extends JPanel implements ActionListener {
 		
 		this.contactInfoPanel = (ContactInfoPanel) contactInfoPanel;
 		this.contactListPanel = (ContactListPanel) contactListPanel;
-		connection = new JDBCConnection();
+		//this.connection = new JDBCConnection();
+		connection = MyConnection.getConnection();
 
 		this.saveChanges = new JButton("Save Changes");
 		saveChanges.setEnabled(false);
@@ -53,8 +55,13 @@ public class InfoButtonPanel extends JPanel implements ActionListener {
 		if (e.getSource() == saveChanges) {
 			String errorMessages = validator.validateFields();
 			if(errorMessages.equals("")){
+				int selectedIndex = contactListPanel.getSelectedIndex();
+				String contactID = connection.getSortedContactList().get(selectedIndex).getID();
 				Contact contact = contactInfoPanel.getContact();
+				contact.setID(contactID);
 				connection.updateContact(contact);
+				contactListPanel.nodeChanged(selectedIndex);
+				//contactListPanel.refreshList();
 			} else {
 				JOptionPane.showMessageDialog(contactInfoPanel, errorMessages, "Error", JOptionPane.ERROR_MESSAGE);
 			}

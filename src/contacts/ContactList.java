@@ -27,5 +27,9 @@ public class ContactList {
 	public Contact get(int index) {
 		return contactList.get(index);
 	}
+	
+	public void remove(int index) {
+		contactList.remove(index);
+	}
 
 }

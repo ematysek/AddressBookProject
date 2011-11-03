@@ -134,7 +134,7 @@ public class ContactInfoPanel extends JPanel {
 	
 	public Contact getContact(){
 		Contact contact = new Contact("0", txtFirstName.getText(), txtLastName.getText(), txtAddress.getText(), 
-			txtCity.getText(), txtState.getText(), txtZip.getText(), 
+			txtCity.getText(), txtState.getText().toUpperCase(), txtZip.getText(), 
 			phoneNumberPanel.getHomePhone(), 
 			phoneNumberPanel.getCellPhone(), 
 			txtEmail.getText());

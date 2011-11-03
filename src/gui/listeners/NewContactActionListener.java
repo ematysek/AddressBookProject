@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 
 import sql.JDBCConnection;
+import sql.MyConnection;
 
 import contacts.Contact;
 
@@ -21,8 +22,8 @@ public class NewContactActionListener implements ActionListener{
 	//Panels
 	private ContactInfoPanel  contactInfo;
 	private ContactListPanel contactList;
-	//contact
-	//private Contact contact;
+	//Connection
+	private JDBCConnection connection;
 	//Field Validator
 	private Validator validator;
 	
@@ -31,6 +32,7 @@ public class NewContactActionListener implements ActionListener{
 		this.contactInfo = (ContactInfoPanel) contactInfo;
 		this.contactList = (ContactListPanel) contactList;
 		validator = new Validator(contactInfo);
+		this.connection = MyConnection.getConnection();
 	}
 	
 	@Override
@@ -39,8 +41,9 @@ public class NewContactActionListener implements ActionListener{
 		String errorMessages = validator.validateFields();
 			if(errorMessages.equals("")){
 				Contact contact = contactInfo.getContact();
-				JDBCConnection myConnection = new JDBCConnection();
-				myConnection.addContact(contact);
+				//JDBCConnection myConnection = new JDBCConnection();
+				connection.addContact(contact);
+				contactList.nodeAdded();
 			} else {
 				JOptionPane.showMessageDialog(contactInfo, errorMessages, "Error", JOptionPane.ERROR_MESSAGE);
 			}

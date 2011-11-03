@@ -16,7 +16,6 @@ import javax.swing.WindowConstants;
 import gui.ConstraintsFactory;
 import gui.panels.ButtonPanel;
 import gui.panels.contactinfo.ContactInfoPanel;
-import gui.panels.info.InfoPanel;
 import gui.panels.ContactListPanel;
 
 /**

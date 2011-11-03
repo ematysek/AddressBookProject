@@ -13,6 +13,10 @@ public class MyConnection {
 	public MyConnection(){
 		connection = new JDBCConnection();
 	}
+	
+	public static JDBCConnection getConnection() {
+		return connection;
+	}
 
 	public static void printAllContacts(){
 		connection.printAllContacts();

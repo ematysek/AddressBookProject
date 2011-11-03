@@ -62,6 +62,10 @@ public class Contact implements Comparable {
 		return ID;
 	}
 
+	public void setID(String iD) {
+		ID = iD;
+	}
+
 	/**
 	 * @return the firstName
 	 */
@@ -198,7 +202,13 @@ public class Contact implements Comparable {
 	}
 
 	public String getNodeString() {
-		return (this.lastName + ", " + this.firstName);
+		String nodeString;
+		if (this.lastName.equals("")) {
+			nodeString = this.firstName;
+		} else {
+			nodeString = (this.lastName + ", " + this.firstName);
+		}
+		return nodeString;
 	}
 
 	@Override
@@ -210,6 +220,41 @@ public class Contact implements Comparable {
 	public int compareTo(Object obj) {
 		Contact c = (Contact) obj;
 		return this.lastName.compareToIgnoreCase(c.lastName);
+	}
+
+	public boolean equals(Contact c) {
+		if (!ID.equals(c.getID())) {
+			return false;
+		}
+		if (!firstName.equals(c.getFirstName())) {
+			return false;
+		}
+		if (!lastName.equals(c.getLastName())) {
+			return false;
+		}
+		if (!address.equals(c.getAddress())) {
+			return false;
+		}
+		if (!city.equals(c.getCity())) {
+			return false;
+		}
+		if (!state.equals(c.getState())) {
+			return false;
+		}
+		if (!zip.equals(c.getZip())) {
+			return false;
+		}
+		if (!homePhone.equals(c.getHomePhone())) {
+			return false;
+		}
+		if (!cellPhone.equals(c.getCellPhone())) {
+			return false;
+		}
+		if (!email.equals(c.getEmail())) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

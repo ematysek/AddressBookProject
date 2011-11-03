@@ -2,7 +2,6 @@ package gui.panels;
 
 import gui.listeners.SelectionListener;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -12,6 +11,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import sql.JDBCConnection;
+import sql.MyConnection;
 
 import contacts.*;
 
@@ -53,33 +53,35 @@ public class ContactListPanel extends JPanel {
 		this.rootNode = new DefaultMutableTreeNode("Contacts");
 
 		this.treeModel = new DefaultTreeModel(rootNode);
-		
-		this.connection = new JDBCConnection();
+
+		// this.connection = new JDBCConnection();
+		this.connection = MyConnection.getConnection();
 
 		this.contactTree = new JTree(treeModel);
 		// contactTree.setPreferredSize(new Dimension(200, 500));
-		contactTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		
+		contactTree.getSelectionModel().setSelectionMode(
+				TreeSelectionModel.SINGLE_TREE_SELECTION);
 
-		
-//TODO replace with this.refreshList();
-		this.refreshList();
+		this.initializeTree();
 
 		this.scrollPane = new JScrollPane(contactTree);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setPreferredSize(new Dimension(215, 413));
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane
+				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.add(scrollPane);
 		// this.add(contactTree);
 	}
-	
-	public int getSelectedIndex(){
-		DefaultMutableTreeNode tempNode = (DefaultMutableTreeNode) contactTree.getLastSelectedPathComponent();
-		if(tempNode == null){
+
+	public int getSelectedIndex() {
+		DefaultMutableTreeNode tempNode = (DefaultMutableTreeNode) contactTree
+				.getLastSelectedPathComponent();
+		if (tempNode == null) {
 			return -2;
 		}
 		int index = rootNode.getIndex(tempNode);
-		
+
 		return index;
 	}
 
@@ -103,24 +105,84 @@ public class ContactListPanel extends JPanel {
 	public ContactList getContactList() {
 		return contactList;
 	}
-	
+
 	/**
-	 * @param buttonPanel the buttonPanel to set
+	 * Set the button panel here and pass it to the selection listener in the
+	 * contact tree
+	 * 
+	 * @param buttonPanel
+	 *            the buttonPanel to set
 	 */
 	public void setButtonPanel(JPanel buttonPanel) {
 		this.buttonPanel = buttonPanel;
-		contactTree.addTreeSelectionListener(new SelectionListener(this, contactInfoPanel, buttonPanel));
+		contactTree.addTreeSelectionListener(new SelectionListener(this,
+				contactInfoPanel, buttonPanel));
 	}
 
-	public void refreshList(){
+	public void initializeTree() {
 		this.contactList = connection.getSortedContactList();
 		System.out.println("called");
 		for (int i = contactList.size() - 1; i >= 0; i--) {
 			Contact c = contactList.get(i);
-			treeModel.insertNodeInto(new DefaultMutableTreeNode(c.getNodeString()), rootNode, 0);
-			// rootNode.add(new DefaultMutableTreeNode(c.getNodeString()));
+			treeModel.insertNodeInto(
+					new DefaultMutableTreeNode(c.getNodeString()), rootNode, 0);
 		}
+		
+	}
+
+	public void nodeAdded() {
+		// find the index of the added node by comparing contact ID's
+		ContactList newList = connection.getSortedContactList();
+		int newNodeIndex = 0;
+		for (int i = 0; i < contactList.size(); i++) {
+			if (!newList.get(i).getID().equals(contactList.get(i).getID())) {
+				newNodeIndex = i;
+				break;
+			}
+		}
+
+		// get new contact
+		Contact newContact = newList.get(newNodeIndex);
+		// create node from contact
+		DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(
+				newContact.getNodeString());
+		// insert node into treemodel
+		treeModel.insertNodeInto(newNode, rootNode, newNodeIndex);
+
+		// update contactList
+		this.contactList = connection.getSortedContactList();
+
+	}
 	
+	public void nodeRemoved(int index) {
+		System.out.println(index);
+		//remove contact from list
+		this.contactList.remove(index);
+		//remove node from tree
+		DefaultMutableTreeNode nodeToRemove = (DefaultMutableTreeNode) contactTree.getPathForRow(index+1).getLastPathComponent();
+		treeModel.removeNodeFromParent(nodeToRemove);
+	}
+	
+	public void nodeChanged(int selectedIndex) {
+
+		//get an updated contactlist to compare old contactlist to
+		ContactList newList = connection.getSortedContactList();
+		
+		//update jtree node at selected index
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) contactTree.getPathForRow(selectedIndex+1).getLastPathComponent();
+		String contactString = newList.get(selectedIndex).getNodeString();
+		System.out.println(contactString);
+		if(!node.toString().equals(contactString)){
+			System.out.println("not equal");
+			DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(contactString);
+			treeModel.removeNodeFromParent(node);
+			treeModel.insertNodeInto(newNode, rootNode, selectedIndex);
+			contactTree.setSelectionPath(contactTree.getPathForRow(selectedIndex+1));
+		}
+		
+		//update contactList with changes
+		this.contactList = connection.getSortedContactList();
+		
 	}
 
 }
